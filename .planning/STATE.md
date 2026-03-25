@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 01-foundation-01-01-PLAN.md
-last_updated: "2026-03-25T20:23:30.580Z"
+stopped_at: Checkpoint reached in 01-02 — awaiting human-verify Task 2
+last_updated: "2026-03-25T20:37:33.646Z"
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -47,6 +47,7 @@ Plan: 2 of 2
 
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 2 | 1 tasks | 1 files |
+| Phase 01-foundation P02 | 2 | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -61,6 +62,8 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: Used clamp() for hero headline size token — responsive without media queries, Apple-style large type
 - [Phase 01-foundation]: CSS design system in :root with brand tokens established as project-wide pattern for lp pixt.html
 - [Phase 01-foundation]: Commented-out nav--hidden/nav--visible stubs included in Phase 1 CSS to avoid Phase 3 needing to edit design system
+- [Phase 01-foundation]: Used inline SVG for hero geometric accent — no HTTP request, full color/opacity control
+- [Phase 01-foundation]: Hero padding top uses calc(nav-height + space-lg) to prevent content hiding behind fixed nav
 
 ### Pending Todos
 
@@ -73,6 +76,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-25T20:23:30.577Z
-Stopped at: Completed 01-foundation-01-01-PLAN.md
+Last session: 2026-03-25T20:37:19.445Z
+Stopped at: Checkpoint reached in 01-02 — awaiting human-verify Task 2
 Resume file: None

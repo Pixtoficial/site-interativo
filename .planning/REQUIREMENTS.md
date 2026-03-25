@@ -9,10 +9,10 @@
 
 - [x] **NAV-01**: Barra de navegação sticky com fundo fosco (backdrop-filter) que aparece ao rolar para cima e some ao rolar para baixo
 - [x] **NAV-02**: Logo PIXT e âncora para o formulário no nav
-- [ ] **HERO-01**: Seção hero full-screen com headline impactante, subtítulo e botão CTA que ancora no formulário
-- [ ] **HERO-02**: Hero usa `min-height: 100dvh` com fallback `100vh` para compatibilidade iOS Safari
-- [ ] **FOOT-01**: Footer com aviso de privacidade LGPD e link para política (requisito legal BR)
-- [ ] **FOOT-02**: Smooth scroll nativo via `scroll-behavior: smooth` no `<html>`
+- [x] **HERO-01**: Seção hero full-screen com headline impactante, subtítulo e botão CTA que ancora no formulário
+- [x] **HERO-02**: Hero usa `min-height: 100dvh` com fallback `100vh` para compatibilidade iOS Safari
+- [x] **FOOT-01**: Footer com aviso de privacidade LGPD e link para política (requisito legal BR)
+- [x] **FOOT-02**: Smooth scroll nativo via `scroll-behavior: smooth` no `<html>`
 
 ### Conteúdo e Seções
 
@@ -83,10 +83,10 @@
 |-------------|-------|--------|
 | NAV-01 | Phase 1 | Complete |
 | NAV-02 | Phase 1 | Complete |
-| HERO-01 | Phase 1 | Pending |
-| HERO-02 | Phase 1 | Pending |
-| FOOT-01 | Phase 1 | Pending |
-| FOOT-02 | Phase 1 | Pending |
+| HERO-01 | Phase 1 | Complete |
+| HERO-02 | Phase 1 | Complete |
+| FOOT-01 | Phase 1 | Complete |
+| FOOT-02 | Phase 1 | Complete |
 | FONT-01 | Phase 1 | Complete |
 | PERF-01 | Phase 1 | Complete |
 | PIXT-01 | Phase 2 | Pending |

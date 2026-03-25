@@ -12,7 +12,7 @@ LP PIXT is a single-file, vanilla HTML/CSS/JS landing page built to convert visi
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - CSS design system, document skeleton, nav + hero + footer
+- [x] **Phase 1: Foundation** - CSS design system, document skeleton, nav + hero + footer (completed 2026-03-25)
 - [ ] **Phase 2: Content Sections** - PIXT sticky scroll, agent cards, social proof bar, methodology section
 - [ ] **Phase 3: Form + Interactivity** - Contact form with validation, inline success state, sticky nav JS, agents panel switcher
 - [ ] **Phase 4: Animations + Polish** - IntersectionObserver fade-ins, parallax hero, hover effects, prefers-reduced-motion
@@ -32,7 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 Plans:
 - [x] 01-01-PLAN.md — Design system, document skeleton, and static frosted-glass nav
-- [ ] 01-02-PLAN.md — Full-viewport hero section with geometric accent and LGPD footer
+- [x] 01-02-PLAN.md — Full-viewport hero section with geometric accent and LGPD footer
 **UI hint**: yes
 
 ### Phase 2: Content Sections
@@ -81,7 +81,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 1/2 | In Progress|  |
+| 1. Foundation | 2/2 | Complete   | 2026-03-25 |
 | 2. Content Sections | 0/? | Not started | - |
 | 3. Form + Interactivity | 0/? | Not started | - |
 | 4. Animations + Polish | 0/? | Not started | - |
