@@ -7,8 +7,8 @@
 
 ### Estrutura e Navegação
 
-- [ ] **NAV-01**: Barra de navegação sticky com fundo fosco (backdrop-filter) que aparece ao rolar para cima e some ao rolar para baixo
-- [ ] **NAV-02**: Logo PIXT e âncora para o formulário no nav
+- [x] **NAV-01**: Barra de navegação sticky com fundo fosco (backdrop-filter) que aparece ao rolar para cima e some ao rolar para baixo
+- [x] **NAV-02**: Logo PIXT e âncora para o formulário no nav
 - [ ] **HERO-01**: Seção hero full-screen com headline impactante, subtítulo e botão CTA que ancora no formulário
 - [ ] **HERO-02**: Hero usa `min-height: 100dvh` com fallback `100vh` para compatibilidade iOS Safari
 - [ ] **FOOT-01**: Footer com aviso de privacidade LGPD e link para política (requisito legal BR)
@@ -41,10 +41,10 @@
 
 ### Performance e Qualidade
 
-- [ ] **PERF-01**: Todas as animações usam apenas `transform` e `opacity` (zero layout recalculation)
+- [x] **PERF-01**: Todas as animações usam apenas `transform` e `opacity` (zero layout recalculation)
 - [ ] **PERF-02**: `will-change` aplicado via JS apenas durante animação ativa, removido no `transitionend`
 - [ ] **RESP-01**: Layout responsivo mobile-first, testado em 375px, 768px e 1280px
-- [ ] **FONT-01**: Google Fonts carregado com `preconnect` + `display=swap` (Space Grotesk + Work Sans)
+- [x] **FONT-01**: Google Fonts carregado com `preconnect` + `display=swap` (Space Grotesk + Work Sans)
 
 ## v2 Requirements
 
@@ -81,14 +81,14 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NAV-01 | Phase 1 | Pending |
-| NAV-02 | Phase 1 | Pending |
+| NAV-01 | Phase 1 | Complete |
+| NAV-02 | Phase 1 | Complete |
 | HERO-01 | Phase 1 | Pending |
 | HERO-02 | Phase 1 | Pending |
 | FOOT-01 | Phase 1 | Pending |
 | FOOT-02 | Phase 1 | Pending |
-| FONT-01 | Phase 1 | Pending |
-| PERF-01 | Phase 1 | Pending |
+| FONT-01 | Phase 1 | Complete |
+| PERF-01 | Phase 1 | Complete |
 | PIXT-01 | Phase 2 | Pending |
 | PIXT-02 | Phase 2 | Pending |
 | AGENT-01 | Phase 2 | Pending |

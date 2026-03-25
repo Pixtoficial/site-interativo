@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. Smooth scroll is active — clicking the nav CTA anchor glides to the target section without a hard jump
 **Plans**: 2 plans
 Plans:
-- [ ] 01-01-PLAN.md — Design system, document skeleton, and static frosted-glass nav
+- [x] 01-01-PLAN.md — Design system, document skeleton, and static frosted-glass nav
 - [ ] 01-02-PLAN.md — Full-viewport hero section with geometric accent and LGPD footer
 **UI hint**: yes
 
@@ -81,7 +81,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/2 | Planned | - |
+| 1. Foundation | 1/2 | In Progress|  |
 | 2. Content Sections | 0/? | Not started | - |
 | 3. Form + Interactivity | 0/? | Not started | - |
 | 4. Animations + Polish | 0/? | Not started | - |
