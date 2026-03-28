@@ -1,0 +1,6 @@
+node_modules/
+.claude/
+.planning/
+*.pptx
+*.pdf
+site exemplo_files/

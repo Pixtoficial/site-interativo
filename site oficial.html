@@ -1,0 +1,3020 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Meta Tags -->
+    <title>PIXT | A Força de Trabalho Sintética para a sua Empresa</title>
+    <meta name="description" content="Identificamos gargalos operacionais e substituímo-los por Agentes de IA que vendem, qualificam e gerem por você 24/7.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:wght@300;400;500;600&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Three.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+    <!-- Tailwind CSS (CDN Setup) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            DEFAULT: '#050505',
+                            surface: '#0f0f11',
+                            border: '#1f1f23'
+                        },
+                        brand: {
+                            DEFAULT: '#c6f432', // PIXT Neon Green
+                            hover: '#a8d422',
+                            glow: 'rgba(198, 244, 50, 0.15)'
+                        },
+                        text: {
+                            main: '#ffffff',
+                            muted: '#a1a1aa'
+                        }
+                    },
+                    fontFamily: {
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                        sans: ['"Work Sans"', 'sans-serif'],
+                    },
+                    maxWidth: {
+                        container: "1280px",
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'marquee': 'marquee 40s linear infinite',
+                        'marquee-fast': 'marquee 20s linear infinite',
+                        'marquee-reverse': 'marquee-reverse 40s linear infinite',
+                        'fade-in-up': 'fadeInUp 1s ease-out forwards',
+                        'code-scroll': 'codeScroll 25s linear infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        'marquee-reverse': {
+                            '0%': { transform: 'translateX(-50%)' },
+                            '100%': { transform: 'translateX(0%)' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        codeScroll: {
+                            '0%': { transform: 'translateY(0)' },
+                            '100%': { transform: 'translateY(-50%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* === MOBILE RESPONSIVIDADE === */
+        @media (max-width: 767px) {
+            /* Reduz alturas de scroll-containers pesados no mobile */
+            #hero-scroll-container { height: 500vh !important; }
+            #agentes-zoom { height: 300vh !important; }
+            #quem-somos-zoom { height: 150vh !important; }
+
+            /* Esconde phones 3D no mobile (muito pesados) */
+            #phones-container { display: none !important; }
+
+            /* Formulário */
+            #contact .bg-gray-50 { padding: 1.5rem !important; border-radius: 1.5rem !important; }
+            #contact .bg-white { padding: 1.25rem !important; }
+
+            /* Hero texto */
+            h1 { font-size: clamp(2rem, 10vw, 3.5rem) !important; }
+
+            /* Footer grid */
+            footer .grid { gap: 2rem !important; }
+        }
+
+        /* Lazy loading de imagens */
+        img { loading: lazy; }
+
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(60px) scale(0.96);
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .reveal-section.is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .reveal-right.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Classes para o recorte perfeito da cor */
+        .clip-left { clip-path: inset(0 0 0 0); }
+        .clip-right { display: none; }
+        @media (min-width: 1024px) {
+            .clip-left { clip-path: inset(0 50% 0 0); }
+            .clip-right { display: flex; clip-path: inset(0 0 0 50%); }
+        }
+
+        .glass-nav {
+            background: rgba(5, 5, 5, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bento-card {
+            background: #0f0f11;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .bento-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(198, 244, 50, 0.4);
+            box-shadow: 0 10px 40px -10px rgba(198, 244, 50, 0.15);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        ::selection { background: #000; color: #c6f432; }
+        
+        .will-change-transform { will-change: transform; }
+        .perspective-container { perspective: 1200px; }
+        .perspective-1000 { perspective: 1000px; }
+
+        /* Otimização: promove camadas GPU para elementos animados via JS */
+        #zoom-mask-wrapper, #qs-zoom-mask-wrapper { will-change: transform, opacity; }
+        #hero-mount canvas, #dobra2-mount canvas { will-change: transform; }
+        #fixed-phone { will-change: transform, opacity; }
+        #timeline-progress { will-change: height; }
+
+        /* === HERO SCROLLYTELLING === */
+        @keyframes hero-bounce {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(8px); }
+        }
+        .hero-bounce { animation: hero-bounce 1.2s ease-in-out infinite; }
+        .hero-text-overlay { transition: opacity 0.7s ease; }
+        .transform-origin-top { transform-origin: center top; }
+
+        /* =======================================================
+           EFEITO CPU ARCHITECTURE (Animado no fundo do Mockup)
+           ======================================================= */
+        .cpu-architecture {
+            offset-anchor: 10px 0px;
+            animation: animation-path linear infinite;
+            animation-timing-function: cubic-bezier(0.75, -0.01, 0, 0.99);
+        }
+
+        .cpu-line-1 { offset-path: path("M 10 20 h 79.5 q 5 0 5 5 v 30"); animation-duration: 5s; animation-delay: 1s; }
+        .cpu-line-2 { offset-path: path("M 180 10 h -69.7 q -5 0 -5 5 v 30"); animation-delay: 6s; animation-duration: 2s; }
+        .cpu-line-3 { offset-path: path("M 130 20 v 21.8 q 0 5 -5 5 h -10"); animation-delay: 4s; animation-duration: 6s; }
+        .cpu-line-4 { offset-path: path("M 170 80 v -21.8 q 0 -5 -5 -5 h -50"); animation-delay: 3s; animation-duration: 3s; }
+        .cpu-line-5 { offset-path: path("M 135 65 h 15 q 5 0 5 5 v 10 q 0 5 -5 5 h -39.8 q -5 0 -5 -5 v -20"); animation-delay: 9s; animation-duration: 4s; }
+        .cpu-line-6 { offset-path: path("M 94.8 95 v -36"); animation-delay: 3s; animation-duration: 7s; }
+        .cpu-line-7 { offset-path: path("M 88 88 v -15 q 0 -5 -5 -5 h -10 q -5 0 -5 -5 v -5 q 0 -5 5 -5 h 14"); animation-delay: 4s; animation-duration: 4s; }
+        .cpu-line-8 { offset-path: path("M 30 30 h 25 q 5 0 5 5 v 6.5 q 0 5 5 5 h 20"); animation-delay: 3s; animation-duration: 3s; }
+        
+        .cpu-line-9 { offset-path: path("M 10 70 h 50 q 5 0 5 -5 v -10"); animation-delay: 1s; animation-duration: 4s; }
+        .cpu-line-10 { offset-path: path("M 190 70 h -50 q -5 0 -5 -5 v -10"); animation-delay: 2.5s; animation-duration: 4s; }
+        .cpu-line-11 { offset-path: path("M 40 10 v 20 q 0 5 5 5 h 20"); animation-delay: 5s; animation-duration: 3.5s; }
+        .cpu-line-12 { offset-path: path("M 160 10 v 20 q 0 5 -5 5 h -20"); animation-delay: 1.5s; animation-duration: 3.5s; }
+
+        @keyframes animation-path {
+            0% { offset-distance: 0%; }
+            100% { offset-distance: 100%; }
+        }
+
+        /* =============================================
+           REALISTIC 3D PHONES
+           ============================================= */
+
+        /* Posicionamento, rotação base e hover — CSS puro, sem JS */
+        .phone-1,.phone-2,.phone-3,.phone-4,.phone-5 {
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.5s cubic-bezier(0.25,1,0.5,1), box-shadow 0.5s ease, z-index 0s;
+        }
+        .phone-1 { left:-10px;             top:90px; z-index:1; transform:rotate(-20deg) scale(0.50); }
+        .phone-2 { left:13%;               top:45px; z-index:2; transform:rotate(-10deg) scale(0.65); }
+        .phone-3 { left:calc(50% - 130px); top:5px;  z-index:5; transform:rotate(0deg)   scale(0.83); }
+        .phone-4 { right:13%;              top:45px; z-index:3; transform:rotate(10deg)  scale(0.65); }
+        .phone-5 { right:-10px;            top:90px; z-index:1; transform:rotate(20deg)  scale(0.50); }
+
+        .phone-1:hover { transform:rotate(-4deg)  scale(0.62) translateY(-40px); z-index:50; }
+        .phone-2:hover { transform:rotate(-2deg)  scale(0.80) translateY(-36px); z-index:50; }
+        .phone-3:hover { transform:rotate(0deg)   scale(1.00) translateY(-32px); z-index:50; }
+        .phone-4:hover { transform:rotate(2deg)   scale(0.80) translateY(-36px); z-index:50; }
+        .phone-5:hover { transform:rotate(4deg)   scale(0.62) translateY(-40px); z-index:50; }
+
+        /* Rotação 3D do corpo de cada celular */
+        .phone-1 .phone-3d-body { transform:rotateY(14deg)  rotateX(2deg); }
+        .phone-2 .phone-3d-body { transform:rotateY(8deg)   rotateX(2deg); }
+        .phone-3 .phone-3d-body { transform:rotateY(-2deg)  rotateX(1deg); }
+        .phone-4 .phone-3d-body { transform:rotateY(-8deg)  rotateX(2deg); }
+        .phone-5 .phone-3d-body { transform:rotateY(-14deg) rotateX(2deg); }
+
+        .phone-1:hover .phone-3d-body,
+        .phone-2:hover .phone-3d-body,
+        .phone-3:hover .phone-3d-body,
+        .phone-4:hover .phone-3d-body,
+        .phone-5:hover .phone-3d-body { transform:rotateY(0deg) rotateX(-1deg); }
+
+        .phone-3d-body {
+            width: 260px;
+            height: 530px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .phone-frame {
+            position: absolute; inset: 0;
+            border-radius: 40px;
+            background: linear-gradient(155deg,
+                #5c5c5e 0%, #1c1c1e 18%,
+                #3c3c3e 45%, #1a1a1c 72%,
+                #2e2e30 100%
+            );
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.12),
+                0 80px 160px rgba(0,0,0,1),
+                0 25px 50px rgba(0,0,0,0.8),
+                inset 0 1px 0 rgba(255,255,255,0.18),
+                inset 0 -1px 0 rgba(0,0,0,0.6);
+        }
+        .phone-screen-area {
+            position: absolute;
+            top: 12px; left: 12px; right: 12px; bottom: 12px;
+            border-radius: 30px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            z-index: 2;
+        }
+        .phone-dynamic-island {
+            position: absolute;
+            top: 22px; left: 50%;
+            transform: translateX(-50%);
+            width: 108px; height: 32px;
+            background: #000;
+            border-radius: 20px;
+            z-index: 30;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.9), inset 0 0 0 1px rgba(255,255,255,0.06);
+        }
+        .phone-glare {
+            position: absolute;
+            top: 12px; left: 12px; right: 12px; bottom: 12px;
+            border-radius: 30px;
+            background: linear-gradient(135deg,
+                rgba(255,255,255,0.28) 0%,
+                rgba(255,255,255,0.08) 28%,
+                transparent 50%
+            );
+            pointer-events: none;
+            z-index: 40;
+        }
+        .phone-edge-highlight {
+            position: absolute; inset: 0;
+            border-radius: 40px;
+            background: linear-gradient(170deg,
+                rgba(255,255,255,0.09) 0%, transparent 14%,
+                transparent 86%, rgba(255,255,255,0.03) 100%
+            );
+            pointer-events: none;
+            z-index: 6;
+        }
+        /* Side buttons */
+        .phone-btn-silent { position:absolute; left:-5px; top:95px; width:5px; height:30px; border-radius:3px 0 0 3px; background:linear-gradient(to right,#111,#3d3d3d); box-shadow:-2px 0 5px rgba(0,0,0,0.9),inset 0 1px 0 rgba(255,255,255,0.08); }
+        .phone-btn-vol-up { position:absolute; left:-5px; top:142px; width:5px; height:56px; border-radius:3px 0 0 3px; background:linear-gradient(to right,#111,#3d3d3d); box-shadow:-2px 0 5px rgba(0,0,0,0.9),inset 0 1px 0 rgba(255,255,255,0.08); }
+        .phone-btn-vol-dn { position:absolute; left:-5px; top:212px; width:5px; height:56px; border-radius:3px 0 0 3px; background:linear-gradient(to right,#111,#3d3d3d); box-shadow:-2px 0 5px rgba(0,0,0,0.9),inset 0 1px 0 rgba(255,255,255,0.08); }
+        .phone-btn-power  { position:absolute; right:-5px; top:162px; width:5px; height:72px; border-radius:0 3px 3px 0; background:linear-gradient(to left,#111,#3d3d3d); box-shadow:2px 0 5px rgba(0,0,0,0.9),inset 0 1px 0 rgba(255,255,255,0.08); }
+        /* Chat UI */
+        .phone-chat-header { background:#f0f2f5; padding:8px 10px; display:flex; align-items:center; gap:8px; border-bottom:1px solid #ddd; flex-shrink:0; }
+        .phone-chat-avatar { width:28px; height:28px; border-radius:50%; background:#c6f432; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:10px; color:#050505; flex-shrink:0; }
+        .phone-chat-messages { flex:1; padding:7px; background:#e5ddd5; display:flex; flex-direction:column; gap:5px; font-size:10px; overflow:hidden; }
+        .chat-in  { background:#fff;     color:#111; padding:6px 9px; border-radius:8px 8px 8px 2px; max-width:85%; box-shadow:0 1px 2px rgba(0,0,0,0.12); line-height:1.38; }
+        .chat-out { background:#dcf8c6; color:#111; padding:6px 9px; border-radius:8px 8px 2px 8px; max-width:85%; align-self:flex-end; box-shadow:0 1px 2px rgba(0,0,0,0.12); line-height:1.38; }
+
+        /* =============================================
+           FLOATING LOGOS HERO — #floating-logos-section
+           ============================================= */
+        :root {
+            --brand: #c6f432;
+            --bg: #050505;
+        }
+        .fls-logo-card {
+            position: absolute;
+            width: 76px;
+            height: 76px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            padding: 14px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            will-change: transform;
+            opacity: 0;
+            overflow: visible;
+            transition: opacity 0.6s ease;
+            cursor: default;
+        }
+        .fls-logo-card.fls-visible {
+            opacity: 1;
+        }
+        .fls-logo-card:hover {
+            z-index: 200 !important;
+        }
+        .fls-logo-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .fls-logo-inner img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        /* ── Tooltip ─────────────────────────────────── */
+        .fls-tooltip {
+            position: absolute;
+            bottom: calc(100% + 14px);
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            width: 220px;
+            background: rgba(8,8,14,0.97);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 14px 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.22s ease, transform 0.22s ease;
+            z-index: 300;
+            text-align: left;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 24px 64px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+            white-space: normal;
+        }
+        /* seta para baixo (tooltip acima) */
+        .fls-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(255,255,255,0.08);
+        }
+        .fls-logo-card:hover .fls-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+        /* ── variante: tooltip abaixo da logo (logos no topo) ── */
+        .fls-tt-below .fls-tooltip {
+            bottom: auto;
+            top: calc(100% + 14px);
+            transform: translateX(-50%) translateY(-8px);
+        }
+        .fls-tt-below .fls-tooltip::after {
+            top: auto;
+            bottom: 100%;
+            border-top-color: transparent;
+            border-bottom-color: rgba(255,255,255,0.08);
+        }
+        .fls-tt-below:hover .fls-tooltip {
+            transform: translateX(-50%) translateY(0);
+        }
+        /* ── variante: tooltip à direita (logos na borda esquerda) ── */
+        .fls-tt-right .fls-tooltip {
+            bottom: auto;
+            top: 50%;
+            left: calc(100% + 14px);
+            transform: translateY(-50%) translateX(-8px);
+        }
+        .fls-tt-right .fls-tooltip::after {
+            top: 50%;
+            left: auto;
+            right: 100%;
+            transform: translateY(-50%);
+            border-top-color: transparent;
+            border-right-color: rgba(255,255,255,0.08);
+        }
+        .fls-tt-right:hover .fls-tooltip {
+            transform: translateY(-50%) translateX(0);
+        }
+        /* ── variante: tooltip à esquerda (logos na borda direita) ── */
+        .fls-tt-left .fls-tooltip {
+            bottom: auto;
+            top: 50%;
+            left: auto;
+            right: calc(100% + 14px);
+            transform: translateY(-50%) translateX(8px);
+        }
+        .fls-tt-left .fls-tooltip::after {
+            top: 50%;
+            left: 100%;
+            right: auto;
+            transform: translateY(-50%);
+            border-top-color: transparent;
+            border-left-color: rgba(255,255,255,0.08);
+        }
+        .fls-tt-left:hover .fls-tooltip {
+            transform: translateY(-50%) translateX(0);
+        }
+        .fls-tt-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0 0 5px;
+            letter-spacing: 0.01em;
+            line-height: 1.3;
+        }
+        .fls-tt-desc {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 12px;
+            color: rgba(255,255,255,0.55);
+            margin: 0;
+            line-height: 1.65;
+        }
+        .fls-tt-tag {
+            display: inline-block;
+            margin-top: 9px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #c6f432;
+            background: rgba(198,244,50,0.08);
+            border: 1px solid rgba(198,244,50,0.22);
+            border-radius: 4px;
+            padding: 3px 8px;
+        }
+
+        .fls-cta-btn {
+            display: inline-block;
+            background: #c6f432;
+            color: #050505;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 16px 44px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 40px;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .fls-cta-btn:hover {
+            background: #d8ff40;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(198,244,50,0.35);
+        }
+        /* === FLOATING ICONS HERO === */
+        .floating-icon {
+            will-change: transform;
+        }
+        .floating-icon > div {
+            animation: floatIcon 6s ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+        }
+        @keyframes floatIcon {
+            0%   { transform: translateY(0px) translateX(0px) rotate(0deg); }
+            25%  { transform: translateY(-8px) translateX(3px) rotate(3deg); }
+            50%  { transform: translateY(-4px) translateX(-3px) rotate(-2deg); }
+            75%  { transform: translateY(-10px) translateX(2px) rotate(4deg); }
+            100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+        }
+        /* Hover: pausa animação e mostra tooltip */
+        .floating-icon { overflow: visible; cursor: pointer; }
+        .floating-icon:hover > div { animation-play-state: paused; }
+        .floating-icon:hover { z-index: 50 !important; }
+        /* Tooltip card */
+        .fi-card {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.18s ease, visibility 0.18s;
+            position: absolute;
+            width: 210px;
+            background: rgba(10,10,10,0.95);
+            border: 1px solid rgba(198,244,50,0.4);
+            border-radius: 14px;
+            padding: 14px 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.7), 0 0 24px rgba(198,244,50,0.1);
+            backdrop-filter: blur(14px);
+            pointer-events: none;
+            z-index: 200;
+            white-space: normal;
+        }
+        .floating-icon:hover .fi-card { visibility: visible; opacity: 1; }
+        .fi-card-title { font-size: 13px; font-weight: 700; color: #c6f432; margin-bottom: 6px; font-family: 'Space Grotesk', sans-serif; }
+        .fi-card-desc  { font-size: 12px; color: #a1a1aa; line-height: 1.5; font-family: 'Work Sans', sans-serif; }
+        /* Directional variants */
+        .fi-card-above { bottom: calc(100% + 14px); left: 50%; transform: translateX(-50%); }
+        .fi-card-below { top: calc(100% + 14px); left: 50%; transform: translateX(-50%); }
+        .fi-card-left  { right: calc(100% + 14px); top: 50%; transform: translateY(-50%); }
+        .fi-card-right { left: calc(100% + 14px); top: 50%; transform: translateY(-50%); }
+        /* Transition de saída da dobra anterior */
+        #foto-sticky {
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        #foto-sticky.fls-exit {
+            opacity: 0;
+            transform: translateY(-30px);
+            pointer-events: none;
+        }
+        @media (max-width: 768px) {
+            .fls-logo-card {
+                width: 56px;
+                height: 56px;
+                padding: 10px;
+                border-radius: 18px;
+            }
+            .fls-logo-inner img {
+                width: 30px;
+                height: 30px;
+            }
+            .fls-mobile-hide {
+                display: none !important;
+            }
+            #floating-logos-section h2 {
+                font-size: clamp(28px, 8vw, 48px) !important;
+            }
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden">
+
+    <!-- 1. Navbar -->
+    <nav id="main-nav" class="w-full z-[100] glass-nav" style="overflow:visible;position:fixed;top:0;left:0;opacity:0;pointer-events:none;transition:opacity 0.6s ease,transform 0.6s ease;transform:translateY(-100%)">
+        <svg class="absolute top-0 left-0 w-full h-full text-white opacity-[0.22] pointer-events-none z-0" viewBox="0 0 800 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <path d="M -100 80 C 150 160 300 -20 500 80 S 700 200 1000 120" stroke="currentColor" stroke-width="60" fill="none" stroke-linecap="round"/>
+            <path d="M -50 180 C 200 260 400 80 700 180 S 900 280 1100 200" stroke="currentColor" stroke-width="80" fill="none" stroke-linecap="round"/>
+        </svg>
+        <div class="container mx-auto px-6 max-w-7xl flex items-center justify-between relative z-10" style="height:3rem; overflow:visible;">
+            <div class="flex items-center gap-6 md:gap-8">
+                <!-- Logo PIXT -->
+                <a href="#" class="flex items-center gap-3">
+                    <img src="pxtlogo.png" alt="PIXT Logo" class="h-28 object-contain">
+                </a>
+                <div class="hidden md:block w-px h-8 bg-white/20"></div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#conceito" class="text-text-muted hover:text-brand text-sm font-medium transition-colors">Conceito</a>
+                <a href="#metodologia" class="text-text-muted hover:text-brand text-sm font-medium transition-colors">Método</a>
+                <a href="#agentes-zoom" class="text-text-muted hover:text-brand text-sm font-medium transition-colors">Agentes</a>
+                <a href="#jornada" class="text-text-muted hover:text-brand text-sm font-medium transition-colors">Jornada</a>
+                <a href="#quem-somos-zoom" class="text-text-muted hover:text-brand text-sm font-medium transition-colors">Sobre</a>
+                
+                <a href="#contact" class="ml-4 bg-brand hover:bg-brand-hover text-black font-bold text-sm px-6 py-2.5 rounded-full transition-all shadow-[0_0_15px_rgba(198,244,50,0.2)]">
+                    Diagnóstico
+                </a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-white p-2">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 py-4 px-6 flex flex-col gap-4 shadow-xl z-50">
+            <a href="#conceito" class="text-text-main text-base font-medium py-2 border-b border-gray-100">Conceito</a>
+            <a href="#metodologia" class="text-text-main text-base font-medium py-2 border-b border-gray-100">Método</a>
+            <a href="#agentes-zoom" class="text-text-main text-base font-medium py-2 border-b border-gray-100">Agentes</a>
+            <a href="#jornada" class="text-text-main text-base font-medium py-2 border-b border-gray-100">Jornada</a>
+            <a href="#quem-somos-zoom" class="text-text-main text-base font-medium py-2 border-b border-gray-100">Sobre</a>
+            <a href="#contact" class="bg-brand text-black text-center font-bold text-base px-6 py-3 rounded-full mt-2">
+                Diagnóstico
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- 2. Hero Section — 3D Scrollytelling -->
+        <div id="hero-scroll-container" style="position:relative;width:100%;height:1000vh;background:#111211;">
+
+            <div id="hero-sticky" style="position:sticky;top:0;left:0;width:100%;height:100vh;overflow:hidden;border-bottom:1px solid rgba(230,246,237,0.2);">
+
+                <!-- Grid de fundo tecnológica -->
+                <div style="position:absolute;inset:0;z-index:0;pointer-events:none;">
+                    <div style="position:absolute;inset:0;background-image:linear-gradient(to right,rgba(230,246,237,0.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(230,246,237,0.04) 1px,transparent 1px);background-size:5vw 5vw;-webkit-mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,#000 10%,transparent 100%);mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,#000 10%,transparent 100%);"></div>
+                    <div style="position:absolute;inset:0;background-image:linear-gradient(to right,rgba(198,244,50,0.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(198,244,50,0.04) 1px,transparent 1px);background-size:1.25vw 1.25vw;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 0%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 0%,transparent 100%);"></div>
+                </div>
+
+                <!-- Canvas Three.js -->
+                <div id="hero-mount" style="position:absolute;inset:0;z-index:10;"></div>
+
+                <!-- Lanterna de mouse -->
+                <div id="hero-flashlight" style="position:absolute;inset:0;pointer-events:none;z-index:0;"></div>
+
+                <!-- Fase 1 – Intro (0%–8%) -->
+                <div id="hero-t1" class="hero-text-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:20;pointer-events:none;opacity:1;">
+                    <div style="position:relative;margin-bottom:2rem;padding:0 1rem;">
+                        <h1 style="font-size:clamp(2.5rem,7vw,5rem);font-weight:900;background:linear-gradient(to bottom,#ffffff,#E6F6ED,#607368);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;letter-spacing:-0.05em;">PIXT — NEXT PIXEL</h1>
+                        <div style="position:absolute;inset:0;background:#E6F6ED;filter:blur(80px);opacity:0.1;border-radius:50%;transform:scale(1.1);"></div>
+                    </div>
+                    <p style="font-size:clamp(1rem,2vw,1.25rem);color:rgba(230,246,237,0.7);font-weight:300;display:flex;flex-direction:column;align-items:center;text-align:center;">
+                        Arraste para começar a experiência
+                        <svg class="hero-bounce" style="margin-top:1rem;width:1.5rem;height:1.5rem;color:#E6F6ED;" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                    </p>
+                </div>
+
+                <!-- Fase 2 – IA Aplicada (8%–18%) -->
+                <div id="hero-t2" class="hero-text-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-start;padding-left:10%;z-index:20;pointer-events:none;opacity:0;">
+                    <div style="max-width:40rem;">
+                        <p style="color:rgba(230,246,237,0.5);font-size:0.75rem;font-family:monospace;text-transform:uppercase;letter-spacing:0.2em;margin-bottom:1rem;">Fase 1</p>
+                        <h2 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:500;color:#E6F6ED;line-height:1.2;">IA aplicada<br>de forma correta<br>no seu negócio.</h2>
+                    </div>
+                </div>
+
+                <!-- Fase 3 – Otimizamos (18%–28%) -->
+                <div id="hero-t3" class="hero-text-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding-right:10%;z-index:20;pointer-events:none;opacity:0;">
+                    <div style="max-width:40rem;text-align:right;">
+                        <p style="color:rgba(230,246,237,0.5);font-size:0.75rem;font-family:monospace;text-transform:uppercase;letter-spacing:0.2em;margin-bottom:1rem;">Fase 2</p>
+                        <h2 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:500;color:#E6F6ED;line-height:1.2;">Otimizamos<br>seus processos.</h2>
+                    </div>
+                </div>
+
+                <!-- Fase 4 – Auto-montagem (38%–50%) -->
+                <div id="hero-t4" class="hero-text-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding-right:10%;z-index:20;pointer-events:none;opacity:0;">
+                    <div style="max-width:35rem;text-align:right;background:rgba(19,21,20,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:2rem;border-radius:1.5rem;border:1px solid rgba(230,246,237,0.1);">
+                        <p style="color:#c6f432;font-size:0.75rem;font-family:monospace;text-transform:uppercase;letter-spacing:0.2em;margin-bottom:1rem;">Auto-montagem Estratégica</p>
+                        <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:500;color:#E6F6ED;margin-bottom:1rem;line-height:1.3;">Você precisa de IA mas não sabe onde implementar.</h2>
+                        <p style="font-size:clamp(1rem,1.5vw,1.25rem);color:rgba(230,246,237,0.9);font-weight:300;line-height:1.7;">A escala não significa aumentar seus funcionários mas sim direcionar a IA de maneira correta junto a capacidade produtiva da sua empresa.</p>
+                    </div>
+                </div>
+
+                <!-- Fase 5 – Decisões (50%–65%) -->
+                <div id="hero-t5" class="hero-text-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:10%;z-index:20;pointer-events:none;opacity:0;">
+                    <div style="text-align:center;padding:0 1.5rem;">
+                        <h2 style="font-size:clamp(1.5rem,3vw,2.5rem);font-weight:500;color:#E6F6ED;margin-bottom:1rem;">Você toma decisões todos os dias<br>sem ter os dados certos.</h2>
+                        <p style="font-size:clamp(0.9rem,1.5vw,1.25rem);color:#c6f432;font-family:monospace;text-transform:uppercase;letter-spacing:0.1em;">visão 360 de todos os dados da sua empresa</p>
+                    </div>
+                </div>
+
+                <!-- Fase 6 – Gargalos (65%–75%) -->
+                <div id="hero-t6" class="hero-text-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding-right:10%;z-index:20;pointer-events:none;opacity:0;">
+                    <div style="max-width:40rem;text-align:right;">
+                        <p style="color:rgba(230,246,237,0.5);font-size:0.75rem;font-family:monospace;text-transform:uppercase;letter-spacing:0.2em;margin-bottom:1rem;">Mapeamento cirúrgico</p>
+                        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:500;color:#E6F6ED;line-height:1.2;">Identificamos os<br>gargalos da<br>sua operação.</h2>
+                    </div>
+                </div>
+
+                <!-- Fase 7 – Tecnologia (75%–85%) -->
+                <div id="hero-t7" class="hero-text-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-start;padding-left:10%;z-index:20;pointer-events:none;opacity:0;">
+                    <div style="max-width:40rem;">
+                        <h2 style="font-size:clamp(1.75rem,4vw,3rem);font-weight:500;color:#E6F6ED;margin-bottom:1.5rem;line-height:1.2;">Você precisa da tecnologia<br>e nós a dominamos.</h2>
+                        <p style="font-size:clamp(1rem,1.75vw,1.5rem);color:#c6f432;font-weight:300;line-height:1.7;">E hoje a PIXT pode aplicá-la a você, continue a jornada para entender mais.</p>
+                    </div>
+                </div>
+
+            </div><!-- /hero-sticky -->
+        </div><!-- /hero-scroll-container -->
+
+        <!-- 3. Secção: Split Screen (Conceito) -->
+        <section id="conceito" class="reveal-section relative z-40 w-full flex flex-col lg:flex-row -mt-12 shadow-[0_-20px_40px_rgba(0,0,0,0.3)] overflow-visible">
+            
+            <div class="absolute top-0 left-0 w-full z-40 h-32 pointer-events-none">
+                <div class="absolute inset-0 w-full h-full flex flex-col justify-center clip-left pt-6 pb-2 border-b border-dark/10">
+                    <div class="w-full whitespace-nowrap">
+                        <p class="text-[10px] md:text-xs font-bold text-dark/60 uppercase tracking-widest mb-4 w-full text-center">Mais de 100 empresas automatizadas com nossos agentes</p>
+                        <div class="flex w-max animate-marquee-fast gap-16 items-center px-8 opacity-70">
+                            <span class="font-display font-bold text-lg md:text-xl text-dark">TECHCORP</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-dark tracking-widest">INOVASYS</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-dark italic">AGÊNCIAX</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-dark">GLOBALBANK</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-dark">NEXUSTECH</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-dark tracking-[0.2em]">PIXELCORP</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-dark">TECHCORP</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-dark tracking-widest">INOVASYS</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-dark italic">AGÊNCIAX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="absolute inset-0 w-full h-full flex flex-col justify-center clip-right pt-6 pb-2 border-b border-white/10 hidden lg:flex">
+                    <div class="w-full whitespace-nowrap">
+                        <p class="text-[10px] md:text-xs font-bold text-white/50 uppercase tracking-widest mb-4 w-full text-center">Mais de 100 empresas automatizadas com nossos agentes</p>
+                        <div class="flex w-max animate-marquee-fast gap-16 items-center px-8 opacity-70">
+                            <span class="font-display font-bold text-lg md:text-xl text-white">TECHCORP</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-white tracking-widest">INOVASYS</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-white italic">AGÊNCIAX</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-white">GLOBALBANK</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-white">NEXUSTECH</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-white tracking-[0.2em]">PIXELCORP</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-white">TECHCORP</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-white tracking-widest">INOVASYS</span>
+                            <span class="font-display font-bold text-lg md:text-xl text-white italic">AGÊNCIAX</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lado Esquerdo -->
+            <div class="w-full lg:w-1/2 bg-brand px-10 py-16 pt-36 md:px-20 md:pt-40 md:pb-24 flex flex-col justify-center relative overflow-visible min-h-[600px]">
+                <!-- Linhas continuam aqui com margem negativa em cima e em baixo -->
+                <svg class="absolute top-[-25%] left-0 w-full h-[150%] text-black opacity-[0.08] pointer-events-none z-0" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="currentColor" stroke-width="80" fill="none" stroke-linecap="round"/>
+                    <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="currentColor" stroke-width="120" fill="none" stroke-linecap="round"/>
+                </svg>
+
+                <div class="relative z-10 w-full max-w-xl mx-auto lg:mx-0 mt-4 md:mt-8">
+                    <p class="font-sans text-dark font-medium text-lg md:text-xl leading-relaxed max-w-md pr-4 mb-6 pl-2 reveal-on-scroll" style="transition-delay: 100ms;">
+                        Identificamos os gargalos operacionais da sua empresa e os substituímos por Agentes de IA que vendem e gerenciam por você 24/7.
+                    </p>
+
+                    <div class="relative w-full mb-10 reveal-on-scroll cursor-default group" style="transition-delay: 200ms;">
+                        <div class="absolute top-8 left-6 right-[-24px] bottom-[-24px] bg-white/40 rounded-[2.5rem] rounded-bl-xl shadow-sm z-0 transition-transform duration-500 group-hover:translate-x-3 group-hover:translate-y-3"></div>
+                        <div class="absolute top-4 left-3 right-[-12px] bottom-[-12px] bg-white/70 rounded-[2.5rem] rounded-bl-xl shadow-md z-10 transition-transform duration-500 group-hover:translate-x-1 group-hover:translate-y-1"></div>
+                        <div class="relative bg-white p-10 md:p-12 rounded-[2.5rem] rounded-bl-xl shadow-2xl z-20 transform transition-transform duration-500 group-hover:-translate-y-2 group-hover:-translate-x-1">
+                            <h2 class="font-display font-bold text-3xl md:text-[2.75rem] leading-[1.1] tracking-tight text-gray-900">
+                                Onde a sua operação trava,<br/>
+                                a <span class="text-brand-dark">PIXT</span> automatiza.
+                            </h2>
+                            <div class="absolute bottom-6 right-8 text-gray-400 text-sm font-bold">12:22</div>
+                        </div>
+                    </div>
+                    
+                    <div class="pl-2 mb-8 reveal-on-scroll" style="transition-delay: 300ms;">
+                        <a href="#contact" class="group w-max px-8 py-4 bg-dark text-white font-bold text-lg rounded-full hover:bg-white hover:text-dark transition-all duration-300 flex items-center justify-center gap-3 shadow-[0_15px_30px_rgba(0,0,0,0.15)]">
+                            Fazer Diagnóstico
+                            <svg class="transform group-hover:translate-x-1 transition-transform" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="absolute bottom-10 left-10 md:left-20 font-display font-bold text-dark text-sm tracking-widest flex gap-3 reveal-on-scroll" style="transition-delay: 400ms;">
+                    <span class="border-b-2 border-dark pb-1">01</span>
+                    <span class="opacity-50">02</span>
+                    <span class="opacity-50">03</span>
+                </div>
+            </div>
+            
+            <!-- Lado Direito -->
+            <div class="w-full lg:w-1/2 bg-[#050505] px-10 py-16 pt-36 md:px-20 md:pt-40 md:pb-24 relative flex flex-col min-h-[600px] overflow-visible">
+                <!-- Linhas continuam aqui com margem negativa em cima e em baixo -->
+                <svg class="absolute top-[-25%] left-0 w-full h-[150%] text-white opacity-[0.15] pointer-events-none transform -scale-x-100 z-0" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="currentColor" stroke-width="80" fill="none" stroke-linecap="round"/>
+                    <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="currentColor" stroke-width="120" fill="none" stroke-linecap="round"/>
+                </svg>
+
+                <div class="w-full text-right z-30 mt-4 md:mt-0 reveal-right">
+                    <p class="text-white font-sans text-xl md:text-2xl font-light">
+                        Isso aqui não é<br>um atendente.
+                    </p>
+                    <p class="text-brand font-display font-bold text-2xl md:text-3xl mt-1">
+                        É a PIXT em ação.
+                    </p>
+                </div>
+
+                <div class="relative w-full h-[580px] mt-16 md:mt-12 reveal-on-scroll" style="transition-delay: 300ms;">
+
+                    <!-- Celular 1: Extrema Esquerda -->
+                    <div class="phone-1">
+                        <div style="perspective:900px;">
+                            <div class="phone-3d-body">
+                                <div class="phone-frame"></div>
+                                <div class="phone-screen-area">
+                                    <div class="phone-chat-header">
+                                        <div class="phone-chat-avatar">P</div>
+                                        <div>
+                                            <div style="font-size:12px;font-weight:700;color:#111;line-height:1.2">PIXT Recuperação</div>
+                                            <div style="font-size:9px;color:#666">Carrinho Abandonado</div>
+                                        </div>
+                                    </div>
+                                    <div class="phone-chat-messages">
+                                        <div class="chat-in">Oi Marcos! Notamos que deixou alguns itens no carrinho. Aconteceu algum problema?</div>
+                                        <div class="chat-out">O frete ficou muito alto para minha região.</div>
+                                        <div class="chat-in">Entendo! Consegui liberar um cupom de <b>FRETE GRÁTIS</b> para você finalizar agora. O que acha?</div>
+                                        <div class="chat-out">Excelente! Vou finalizar. ✓</div>
+                                    </div>
+                                </div>
+                                <div class="phone-glare"></div>
+                                <div class="phone-edge-highlight"></div>
+                                <div class="phone-btn-silent"></div>
+                                <div class="phone-btn-vol-up"></div>
+                                <div class="phone-btn-vol-dn"></div>
+                                <div class="phone-btn-power"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Celular 2: Esquerda -->
+                    <div class="phone-2">
+                        <div style="perspective:900px;">
+                            <div class="phone-3d-body">
+                                <div class="phone-frame"></div>
+                                <div class="phone-screen-area">
+                                    <div class="phone-chat-header">
+                                        <div class="phone-chat-avatar">P</div>
+                                        <div>
+                                            <div style="font-size:12px;font-weight:700;color:#111;line-height:1.2">PIXT LeadFlow</div>
+                                            <div style="font-size:9px;color:#666">Qualificando...</div>
+                                        </div>
+                                    </div>
+                                    <div class="phone-chat-messages">
+                                        <div style="text-align:center;color:#999;font-size:9px;font-weight:600;text-transform:uppercase;margin:2px 0">Ontem</div>
+                                        <div class="chat-in">Olá! Preenchi o formulário no site sobre os serviços.</div>
+                                        <div class="chat-out">Perfeito! Qual o volume atual de leads da sua empresa?</div>
+                                        <div class="chat-in">Cerca de 500 por mês.</div>
+                                        <div class="chat-out">Excelente. Transferindo para o consultor Sênior agora.</div>
+                                    </div>
+                                </div>
+                                <div class="phone-glare"></div>
+                                <div class="phone-edge-highlight"></div>
+                                <div class="phone-btn-silent"></div>
+                                <div class="phone-btn-vol-up"></div>
+                                <div class="phone-btn-vol-dn"></div>
+                                <div class="phone-btn-power"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Celular 3: Centro -->
+                    <div class="phone-3">
+                        <div style="perspective:900px;">
+                            <div class="phone-3d-body">
+                                <div class="phone-frame"></div>
+                                <div class="phone-screen-area">
+                                    <div class="phone-chat-header">
+                                        <div class="phone-chat-avatar">P</div>
+                                        <div>
+                                            <div style="font-size:12px;font-weight:700;color:#111;line-height:1.2">PIXT Booker</div>
+                                            <div style="font-size:9px;color:#c6a800;font-weight:600">digitando...</div>
+                                        </div>
+                                    </div>
+                                    <div class="phone-chat-messages">
+                                        <div class="chat-out">E como funciona essa integração?</div>
+                                        <div class="chat-in">Opções nativas do PIXT Booker:<br><br>1. <b>CRM</b> — qualifica e joga no funil certo.<br><br>2. <b>Agenda Direta</b> — lê sua agenda e marca no Calendly/Meet.<br><br>Qual deseja configurar?</div>
+                                        <div class="chat-out">A opção 2 salva minha vida. Tem vaga amanhã às 14h?</div>
+                                    </div>
+                                </div>
+                                <div class="phone-glare"></div>
+                                <div class="phone-edge-highlight"></div>
+                                <div class="phone-btn-silent"></div>
+                                <div class="phone-btn-vol-up"></div>
+                                <div class="phone-btn-vol-dn"></div>
+                                <div class="phone-btn-power"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Celular 4: Direita -->
+                    <div class="phone-4">
+                        <div style="perspective:900px;">
+                            <div class="phone-3d-body">
+                                <div class="phone-frame"></div>
+                                <div class="phone-screen-area">
+                                    <div class="phone-chat-header">
+                                        <div class="phone-chat-avatar">P</div>
+                                        <div>
+                                            <div style="font-size:12px;font-weight:700;color:#111;line-height:1.2">PIXT Suporte</div>
+                                            <div style="font-size:9px;color:#666">Pós-venda ativo</div>
+                                        </div>
+                                    </div>
+                                    <div class="phone-chat-messages">
+                                        <div class="chat-in">Boa tarde, Fernanda! Seu pedido #4821 foi entregue. Tudo certo?</div>
+                                        <div class="chat-out">Recebi, mas veio com defeito na lateral.</div>
+                                        <div class="chat-in">Vou abrir a troca agora. Pode enviar uma foto?</div>
+                                        <div class="chat-out">Claro, enviando... 📷</div>
+                                        <div class="chat-in">Troca aprovada! ✓ Novo produto sai em 24h.</div>
+                                    </div>
+                                </div>
+                                <div class="phone-glare"></div>
+                                <div class="phone-edge-highlight"></div>
+                                <div class="phone-btn-silent"></div>
+                                <div class="phone-btn-vol-up"></div>
+                                <div class="phone-btn-vol-dn"></div>
+                                <div class="phone-btn-power"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Celular 5: Extrema Direita -->
+                    <div class="phone-5">
+                        <div style="perspective:900px;">
+                            <div class="phone-3d-body">
+                                <div class="phone-frame"></div>
+                                <div class="phone-screen-area">
+                                    <div class="phone-chat-header">
+                                        <div class="phone-chat-avatar">P</div>
+                                        <div>
+                                            <div style="font-size:12px;font-weight:700;color:#111;line-height:1.2">PIXT Vendas</div>
+                                            <div style="font-size:9px;color:#666">Prospecção ativa</div>
+                                        </div>
+                                    </div>
+                                    <div class="phone-chat-messages">
+                                        <div class="chat-in">Olá André! Você visitou nossa página de planos 3x esta semana. Posso te ajudar?</div>
+                                        <div class="chat-out">Sim! Fiquei em dúvida entre o Pro e o Enterprise.</div>
+                                        <div class="chat-in">Para 2.000 leads/mês, o Enterprise tem ROI 3x maior. Posso agendar uma demo rápida?</div>
+                                        <div class="chat-out">Pode agendar sim! 🚀</div>
+                                    </div>
+                                </div>
+                                <div class="phone-glare"></div>
+                                <div class="phone-edge-highlight"></div>
+                                <div class="phone-btn-silent"></div>
+                                <div class="phone-btn-vol-up"></div>
+                                <div class="phone-btn-vol-dn"></div>
+                                <div class="phone-btn-power"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- TERCEIRA DOBRA — sticky + pausa + celular reaparece + zoom + vídeo -->
+        <!-- 750vh = espaço para todas as fases da animação -->
+        <section id="foto-dobra" style="position:relative; z-index:44; height:200vh;">
+            <!-- Container sticky -->
+            <div id="foto-sticky" style="position:sticky; top:0; height:100vh; overflow:hidden; background:#050505;">
+
+                <!-- ===== FREEZE PROMPT ===== -->
+                <style>
+                #freeze-prompt{position:absolute;top:0;left:0;width:100%;height:100%;background:#050505;z-index:20;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;overflow:hidden;}
+                .fp-glow{position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(198,244,50,0.08) 0%,transparent 68%);left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:1;}
+                .fp-grid{position:absolute;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(198,244,50,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(198,244,50,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:1;}
+                .fp-logo-card{position:absolute;width:80px;height:80px;border-radius:24px;background:rgba(12,12,16,0.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 20px 60px rgba(0,0,0,0.7),0 4px 16px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;padding:14px;will-change:transform;z-index:3;}
+                .fp-logo-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+                .fp-logo-inner img{width:100%;height:100%;object-fit:contain;}
+                @keyframes fp-float-a{0%,100%{transform:translateY(0px) rotate(-1.5deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+                @keyframes fp-float-b{0%,100%{transform:translateY(-7px) rotate(2deg)}50%{transform:translateY(10px) rotate(-1.5deg)}}
+                @keyframes fp-float-c{0%,100%{transform:translateY(4px) rotate(1deg)}33%{transform:translateY(-13px) rotate(-2deg)}66%{transform:translateY(8px) rotate(1.5deg)}}
+                .fp-fa .fp-logo-inner{animation:fp-float-a 5.3s ease-in-out infinite;}
+                .fp-fb .fp-logo-inner{animation:fp-float-b 6.9s ease-in-out infinite 0.7s;}
+                .fp-fc .fp-logo-inner{animation:fp-float-c 7.4s ease-in-out infinite 1.2s;}
+                .fp-fd .fp-logo-inner{animation:fp-float-a 4.8s ease-in-out infinite reverse 0.4s;}
+                .fp-fe .fp-logo-inner{animation:fp-float-b 5.7s ease-in-out infinite 0.9s reverse;}
+                .fp-ff .fp-logo-inner{animation:fp-float-c 8.1s ease-in-out infinite 0.2s;}
+                .fp-fg .fp-logo-inner{animation:fp-float-a 6.2s ease-in-out infinite 1.8s;}
+                #fp-center{position:relative;z-index:5;text-align:center;max-width:620px;padding:0 28px;}
+                #fp-eyebrow{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.20em;text-transform:uppercase;color:#c6f432;margin-bottom:22px;display:block;}
+                #fp-headline{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.9rem,4.8vw,3.3rem);font-weight:700;color:#ffffff;line-height:1.1;margin-bottom:18px;}
+                #fp-tagline{font-family:'Work Sans',sans-serif;font-size:clamp(0.95rem,1.7vw,1.2rem);font-weight:300;color:rgba(255,255,255,0.58);margin-bottom:40px;line-height:1.7;}
+                #fp-cta{display:inline-flex;align-items:center;gap:10px;background:#c6f432;color:#050505;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.03em;padding:17px 40px;border-radius:100px;text-decoration:none;transition:background 0.2s,transform 0.2s,box-shadow 0.2s;box-shadow:0 0 40px rgba(198,244,50,0.22);}
+                #fp-cta:hover{background:#a8d422;transform:translateY(-2px);box-shadow:0 6px 48px rgba(198,244,50,0.45);}
+                #fp-cta svg{width:16px;height:16px;flex-shrink:0;}
+                </style>
+
+                <div id="freeze-prompt">
+                    <div class="fp-glow"></div>
+                    <div class="fp-grid"></div>
+
+                    <!-- Logo 1: pxtlogo.png — topo esquerda -->
+                    <div class="fp-logo-card fp-fa" style="top:10%;left:10%;">
+                        <div class="fp-logo-inner"><img src="pxtlogo.png" alt="PIXT"></div>
+                    </div>
+
+                    <!-- Logo 2: logo1.jpeg — topo direita -->
+                    <div class="fp-logo-card fp-fb" style="top:20%;right:8%;">
+                        <div class="fp-logo-inner"><img src="logo1.jpeg" alt="PIXT"></div>
+                    </div>
+
+                    <!-- Logo 3: logo 2 branco.png — topo centro-esquerda -->
+                    <div class="fp-logo-card fp-fg" style="top:5%;left:32%;">
+                        <div class="fp-logo-inner"><img src="logo 2 branco.png" alt="PIXT"></div>
+                    </div>
+
+                    <!-- Logo 4: logo 2 colorido — topo centro-direita -->
+                    <div class="fp-logo-card fp-fc" style="top:5%;right:30%;">
+                        <div class="fp-logo-inner"><img src="logo 2 colorido (1).png" alt="PIXT"></div>
+                    </div>
+
+                    <!-- Logo 5: logo2.jpeg — meio esquerda -->
+                    <div class="fp-logo-card fp-fd" style="top:50%;left:4%;">
+                        <div class="fp-logo-inner"><img src="logo2.jpeg" alt="PIXT"></div>
+                    </div>
+
+                    <!-- Logo 6: logo3.jpeg — meio direita -->
+                    <div class="fp-logo-card fp-fe" style="top:55%;right:5%;">
+                        <div class="fp-logo-inner"><img src="logo3.jpeg" alt="PIXT"></div>
+                    </div>
+
+                    <!-- Logo 7: Logo 2 preto.png — baixo esquerda -->
+                    <div class="fp-logo-card fp-ff" style="top:78%;left:8%;">
+                        <div class="fp-logo-inner"><img src="Logo 2 preto.png" alt="PIXT"></div>
+                    </div>
+
+                    <!-- Logo 8: logo 2 branco num card mais claro — baixo centro -->
+                    <div class="fp-logo-card fp-fa" style="top:82%;left:26%;">
+                        <div class="fp-logo-inner"><img src="pxtlogo.png" alt="PIXT"></div>
+                    </div>
+
+                    <!-- Logo 9: baixo direita -->
+                    <div class="fp-logo-card fp-fb" style="top:80%;right:10%;">
+                        <div class="fp-logo-inner"><img src="logo 2 colorido (1).png" alt="PIXT"></div>
+                    </div>
+
+                    <!-- Conteúdo central -->
+                    <div id="fp-center">
+                        <span id="fp-eyebrow">PIXT — Agentes de Inteligência Artificial</span>
+                        <h2 id="fp-headline">Inteligência aplicada<br>de forma correta</h2>
+                        <p id="fp-tagline">Enquanto você foca em crescer, nossos Agentes de IA<br>vendem, qualificam e gerenciam sua operação —<br>sem pausas, sem falhas, 24 horas por dia.</p>
+                        <a id="fp-cta" href="#contact">
+                            Solicitar Diagnóstico
+                            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8h10M9 4l4 4-4 4" stroke="#050505" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- FloatingIconsHero — crossfade com foto1.jpeg via scroll -->
+                <div id="fls-inner" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:25;opacity:1;pointer-events:auto;overflow:visible;background:radial-gradient(ellipse 80% 60% at 50% 40%,#0f1a00 0%,#050505 60%,#050505 100%);">
+                    <!-- Glow verde central -->
+                    <div style="position:absolute;width:800px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(198,244,50,0.07) 0%,transparent 70%);left:50%;top:45%;transform:translate(-50%,-50%);pointer-events:none;z-index:1;"></div>
+                    <!-- Grid sutil -->
+                    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(198,244,50,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(198,244,50,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:1;"></div>
+                    <!-- Curvas SVG de fundo — camada 1 (largas, suaves) -->
+                    <svg style="position:absolute;top:-25%;left:0;width:100%;height:150%;opacity:0.04;pointer-events:none;z-index:1;" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="#c6f432" stroke-width="80" fill="none" stroke-linecap="round"/>
+                        <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="#c6f432" stroke-width="120" fill="none" stroke-linecap="round"/>
+                    </svg>
+                    <!-- Curvas SVG de fundo — camada 2 (mais finas, deslocadas) -->
+                    <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.05;pointer-events:none;z-index:1;" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 0 150 Q 300 -50 600 200 T 1200 150" stroke="#c6f432" stroke-width="1.5" fill="none"/>
+                        <path d="M 0 300 Q 400 100 700 350 T 1200 300" stroke="#c6f432" stroke-width="1" fill="none"/>
+                        <path d="M 0 450 Q 350 250 650 480 T 1200 430" stroke="#c6f432" stroke-width="1.5" fill="none"/>
+                        <path d="M 0 600 Q 300 400 600 620 T 1200 580" stroke="#c6f432" stroke-width="1" fill="none"/>
+                        <path d="M 0 700 Q 400 520 750 720 T 1200 680" stroke="#c6f432" stroke-width="1.5" fill="none"/>
+                    </svg>
+                    <!-- Linhas diagonais finas -->
+                    <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.03;pointer-events:none;z-index:1;" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="-100" y1="0"   x2="600"  y2="900"  stroke="#c6f432" stroke-width="1"/>
+                        <line x1="100"  y1="0"   x2="800"  y2="900"  stroke="#c6f432" stroke-width="1"/>
+                        <line x1="350"  y1="0"   x2="1050" y2="900"  stroke="#c6f432" stroke-width="1"/>
+                        <line x1="600"  y1="0"   x2="1300" y2="900"  stroke="#c6f432" stroke-width="1"/>
+                        <line x1="900"  y1="0"   x2="1600" y2="900"  stroke="#c6f432" stroke-width="1"/>
+                    </svg>
+
+                    <div id="floating-icons-container" class="absolute inset-0 w-full h-full">
+
+                        <!-- PIXT 1 — pxtlogo -->
+                        <div class="floating-icon absolute" data-title="Infraestrutura Autônoma" data-desc="Você contrata o desenvolvimento de uma infraestrutura que faz sua empresa rodar sozinha." data-dir="right" style="--delay:0s;top:10%;left:10%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="pxtlogo.png" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-right">
+                            <p class="fi-card-title">Infraestrutura Autônoma</p>
+                            <p class="fi-card-desc">Você contrata o desenvolvimento de uma infraestrutura que faz sua empresa rodar sozinha.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 2 — logo2 -->
+                        <div class="floating-icon absolute" data-title="Extensivo &amp; Maleável" data-desc="Nosso trabalho é extensivo e maleável, adaptando-se ao ritmo e às necessidades do seu negócio." data-dir="above" style="--delay:0.4s;top:80%;left:10%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="logo2.jpeg" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-above">
+                            <p class="fi-card-title">Extensivo & Maleável</p>
+                            <p class="fi-card-desc">Nosso trabalho é extensivo e maleável, adaptando-se ao ritmo e às necessidades do seu negócio.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 3 — logo3 -->
+                        <div class="floating-icon absolute" data-title="Solução Personalizada" data-desc="Mapeamos seus processos atuais para criar uma solução totalmente personalizada para você." data-dir="below" style="--delay:0.8s;top:5%;left:30%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="logo3.jpeg" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-below">
+                            <p class="fi-card-title">Solução Personalizada</p>
+                            <p class="fi-card-desc">Mapeamos seus processos atuais para criar uma solução totalmente personalizada para você.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 4 — escudo 2 verde -->
+                        <div class="floating-icon absolute" data-title="Integração Total" data-desc="Desenvolvemos Agentes de IA que se integram diretamente aos seus sistemas já existentes." data-dir="below" style="--delay:1.2s;top:5%;right:30%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="escudo 2 verde.png" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-below">
+                            <p class="fi-card-title">Integração Total</p>
+                            <p class="fi-card-desc">Desenvolvemos Agentes de IA que se integram diretamente aos seus sistemas já existentes.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 5 — escudo2 branco -->
+                        <div class="floating-icon absolute" data-title="Múltiplas Frentes" data-desc="Soluções para áreas de vendas, financeira, operacional e comercial." data-dir="left" style="--delay:1.6s;top:20%;right:8%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="escudo2 branco.png" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-left">
+                            <p class="fi-card-title">Múltiplas Frentes</p>
+                            <p class="fi-card-desc">Soluções para áreas de vendas, financeira, operacional e comercial — tudo em um ecossistema.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 6 — pxtlogo -->
+                        <div class="floating-icon absolute" data-title="Diagnóstico Preciso" data-desc="Identificamos o gargalo da sua operação e desenhamos a solução exata que você precisa." data-dir="right" style="--delay:2.0s;top:40%;left:5%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="pxtlogo.png" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-right">
+                            <p class="fi-card-title">Diagnóstico Preciso</p>
+                            <p class="fi-card-desc">Identificamos o gargalo da sua operação e desenhamos a solução exata que você precisa.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 7 — logo2 -->
+                        <div class="floating-icon absolute" data-title="Qualificação de Leads" data-desc="Nossos agentes qualificam leads de forma automática, entregando oportunidades prontas para fechar." data-dir="above" style="--delay:2.4s;top:75%;right:25%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="logo2.jpeg" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-above">
+                            <p class="fi-card-title">Qualificação de Leads</p>
+                            <p class="fi-card-desc">Nossos agentes qualificam leads de forma automática, entregando oportunidades prontas para fechar.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 8 — logo3 -->
+                        <div class="floating-icon absolute" data-title="CRM Automático" data-desc="Operam o CRM de forma automática, mantendo seus dados sempre atualizados sem esforço manual." data-dir="above" style="--delay:2.8s;top:90%;left:70%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="logo3.jpeg" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-above">
+                            <p class="fi-card-title">CRM Automático</p>
+                            <p class="fi-card-desc">Operam o CRM de forma automática, mantendo seus dados sempre atualizados sem esforço manual.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 9 — escudo 2 verde -->
+                        <div class="floating-icon absolute" data-title="Emissão Automática" data-desc="Emite notas fiscais e documentos automaticamente, eliminando processos manuais e erros." data-dir="left" style="--delay:3.2s;top:50%;right:5%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="escudo 2 verde.png" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-left">
+                            <p class="fi-card-title">Emissão Automática</p>
+                            <p class="fi-card-desc">Emite notas fiscais e documentos automaticamente, eliminando processos manuais e erros.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 10 — escudo2 branco -->
+                        <div class="floating-icon absolute" data-title="Agenda Inteligente" data-desc="Agenda reuniões e dispara gatilhos transacionais no momento certo, sem intervenção humana." data-dir="above" style="--delay:3.6s;bottom:8%;left:25%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="escudo2 branco.png" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-above">
+                            <p class="fi-card-title">Agenda Inteligente</p>
+                            <p class="fi-card-desc">Agenda reuniões e dispara gatilhos transacionais no momento certo, sem intervenção humana.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 11 — pxtlogo -->
+                        <div class="floating-icon absolute" data-title="Dados com Visibilidade" data-desc="Organiza e deixa seus dados com visibilidade fácil para tomar decisões com clareza." data-dir="left" style="--delay:4.0s;bottom:10%;right:10%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="pxtlogo.png" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-left">
+                            <p class="fi-card-title">Dados com Visibilidade</p>
+                            <p class="fi-card-desc">Organiza e deixa seus dados com visibilidade fácil, para você tomar decisões com clareza.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 12 — logo2 -->
+                        <div class="floating-icon absolute" data-title="Vendas 24/7" data-desc="Nossos agentes automatizam todo o processo de vendas, fazendo vendas automáticas 24 horas por dia." data-dir="right" style="--delay:4.4s;top:55%;left:5%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="logo2.jpeg" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-right">
+                            <p class="fi-card-title">Vendas 24/7</p>
+                            <p class="fi-card-desc">Nossos agentes automatizam todo o processo de vendas, fazendo vendas automáticas 24 horas por dia.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 13 — logo3 -->
+                        <div class="floating-icon absolute" data-title="Escala Real" data-desc="Uma infraestrutura que faz sua empresa crescer sem precisar multiplicar a equipe na mesma proporção." data-dir="above" style="--delay:4.8s;top:60%;left:30%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="logo3.jpeg" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-above">
+                            <p class="fi-card-title">Escala Real</p>
+                            <p class="fi-card-desc">Uma infraestrutura que faz sua empresa crescer sem precisar multiplicar a equipe na mesma proporção.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 14 — escudo 2 verde -->
+                        <div class="floating-icon absolute" data-title="Operação Contínua" data-desc="Soluções que operam ininterruptamente, garantindo que seu negócio nunca perca uma oportunidade." data-dir="above" style="--delay:5.2s;bottom:5%;right:45%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="escudo 2 verde.png" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-above">
+                            <p class="fi-card-title">Operação Contínua</p>
+                            <p class="fi-card-desc">Soluções que operam ininterruptamente, garantindo que seu negócio nunca perca uma oportunidade.</p>
+                          </div>
+                        </div>
+                        <!-- PIXT 15 — escudo2 branco -->
+                        <div class="floating-icon absolute" data-title="IA sob Medida" data-desc="Cada agente é construído para o seu contexto — não soluções genéricas, mas inteligência aplicada." data-dir="left" style="--delay:5.6s;top:25%;right:20%;">
+                          <div class="flex items-center justify-center w-20 h-20 md:w-24 md:h-24 p-2 rounded-3xl shadow-xl bg-white/10 backdrop-blur-md border border-white/10">
+                            <img src="escudo2 branco.png" alt="PIXT" class="w-full h-full object-contain">
+                          </div>
+                          <div class="fi-card fi-card-left">
+                            <p class="fi-card-title">IA sob Medida</p>
+                            <p class="fi-card-desc">Cada agente é construído para o seu contexto — não soluções genéricas, mas inteligência aplicada.</p>
+                          </div>
+                        </div>
+                    </div><!-- /floating-icons-container -->
+
+                    <!-- Conteúdo central -->
+                    <div class="relative z-10 flex items-center justify-center w-full h-full" style="min-height:100vh;pointer-events:none;">
+                        <div class="text-center px-4 max-w-4xl mx-auto">
+                            <h1 class="font-bold tracking-tight font-display" style="font-size:clamp(3rem,8vw,6rem);letter-spacing:-0.02em;color:#c6f432;text-transform:uppercase;text-shadow:0 0 60px rgba(198,244,50,0.35),0 0 120px rgba(198,244,50,0.15);">
+                                O QUE FAZEMOS?
+                            </h1>
+                            <p class="mt-6 max-w-xl mx-auto text-lg" style="color:#a1a1aa;">
+                                A IA não te substitui, mas te impulsiona e facilita o caminho para sua escala.
+                            </p>
+                            <div class="mt-10">
+                                <a href="#contact" style="pointer-events:auto;" class="inline-flex items-center gap-2 px-8 py-4 bg-[#c6f432] text-black font-bold text-base rounded-full hover:bg-white transition-all duration-300 shadow-[0_0_30px_rgba(198,244,50,0.3)]">
+                                    Solicitar Diagnóstico
+                                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- #floating-logos-section removida — conteúdo integrado em #fls-inner dentro de #foto-dobra -->
+        <section id="floating-logos-section" style="display:none;">
+
+            <!-- Linhas de fundo: grid sutil -->
+            <div style="position:absolute;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(198,244,50,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(198,244,50,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:1;"></div>
+
+            <!-- Linhas de fundo: curvas SVG (igual às demais seções escuras) -->
+            <svg style="position:absolute;top:-25%;left:0;width:100%;height:150%;opacity:0.04;pointer-events:none;z-index:1;" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="white" stroke-width="80" fill="none" stroke-linecap="round"/>
+                <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="white" stroke-width="120" fill="none" stroke-linecap="round"/>
+            </svg>
+
+            <!-- Glow central sutil -->
+            <div style="position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(198,244,50,0.05) 0%,transparent 65%);left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:1;"></div>
+
+            <!-- ═══ LOGOS FLUTUANTES ═══ -->
+
+            <!-- Logo 1: borda esquerda alta → tooltip direita -->
+            <div class="fls-logo-card fls-tt-right" data-fls-idx="0" style="top:14%;left:6%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-a 5.3s ease-in-out infinite 0s;">
+                    <img src="logo 2 branco.png" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 1</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Logo 2: topo direita → tooltip abaixo -->
+            <div class="fls-logo-card fls-tt-below fls-mobile-hide" data-fls-idx="1" style="top:8%;left:74%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-b 6.9s ease-in-out infinite 0.7s;">
+                    <img src="logo 2 colorido (1).png" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 2</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Logo 3: borda esquerda meio → tooltip direita -->
+            <div class="fls-logo-card fls-tt-right fls-mobile-hide" data-fls-idx="2" style="top:52%;left:4%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-c 7.4s ease-in-out infinite 1.2s;">
+                    <img src="Logo 2 preto.png" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 3</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Logo 4: borda direita baixo → tooltip esquerda -->
+            <div class="fls-logo-card fls-tt-left" data-fls-idx="3" style="top:66%;left:82%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-a 4.8s ease-in-out infinite 0.4s;">
+                    <img src="logo1.jpeg" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 4</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Logo 5: borda direita topo → tooltip esquerda -->
+            <div class="fls-logo-card fls-tt-left fls-mobile-hide" data-fls-idx="4" style="top:26%;left:88%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-b 5.7s ease-in-out infinite 0.9s;">
+                    <img src="logo2.jpeg" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 5</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Logo 6: baixo centro-esquerda → tooltip acima -->
+            <div class="fls-logo-card" data-fls-idx="5" style="top:80%;left:26%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-c 8.1s ease-in-out infinite 0.2s;">
+                    <img src="logo3.jpeg" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 6</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Logo 7: topo centro → tooltip abaixo -->
+            <div class="fls-logo-card fls-tt-below fls-mobile-hide" data-fls-idx="6" style="top:5%;left:42%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-a 6.2s ease-in-out infinite 1.8s;">
+                    <img src="pxtlogo.png" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 7</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Logo 8: esquerda meio-alto → tooltip direita -->
+            <div class="fls-logo-card fls-tt-right fls-mobile-hide" data-fls-idx="7" style="top:38%;left:16%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-b 5.1s ease-in-out infinite 0.5s;">
+                    <img src="logo 2 branco.png" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 8</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Logo 9: centro-direita → tooltip acima -->
+            <div class="fls-logo-card fls-mobile-hide" data-fls-idx="8" style="top:34%;left:62%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-c 7.8s ease-in-out infinite 1.4s;">
+                    <img src="logo 2 colorido (1).png" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 9</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Logo 10: centro → tooltip acima -->
+            <div class="fls-logo-card fls-mobile-hide" data-fls-idx="9" style="top:60%;left:52%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-a 4.5s ease-in-out infinite 2.1s;">
+                    <img src="logo3.jpeg" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 10</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Logo 11: baixo direita → tooltip esquerda -->
+            <div class="fls-logo-card fls-tt-left fls-mobile-hide" data-fls-idx="10" style="top:84%;left:68%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-b 6.4s ease-in-out infinite 0.3s;">
+                    <img src="pxtlogo.png" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 11</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Logo 12: topo esquerda-centro → tooltip abaixo -->
+            <div class="fls-logo-card fls-tt-below fls-mobile-hide" data-fls-idx="11" style="top:6%;left:28%;z-index:10;">
+                <div class="fls-logo-inner" style="animation:fp-float-c 9.0s ease-in-out infinite 1.0s;">
+                    <img src="logo1.jpeg" alt="PIXT">
+                </div>
+                <div class="fls-tooltip">
+                    <p class="fls-tt-title">Título 12</p>
+                    <p class="fls-tt-desc">Descrição a ser preenchida.</p>
+                    <span class="fls-tt-tag">Em breve</span>
+                </div>
+            </div>
+
+            <!-- Conteúdo central -->
+            <div style="position:relative;z-index:10;text-align:center;padding:0 24px;max-width:640px;">
+                <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,6vw,72px);font-weight:700;line-height:1.1;background:linear-gradient(to bottom,#ffffff,rgba(255,255,255,0.65));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;margin:0;">
+                    Inteligência aplicada de forma correta
+                </h2>
+                <p style="font-family:'Work Sans','Space Grotesk',sans-serif;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,0.6);max-width:520px;margin:24px auto 0;line-height:1.7;">
+                    Mapeamos seus processos, eliminamos os gargalos e entregamos uma infraestrutura de IA que faz sua empresa crescer sozinha.
+                </p>
+                <div style="margin-top:40px;">
+                    <a href="#contact" class="fls-cta-btn">Quero transformar minha empresa</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Secção: Metodologia -->
+        <section id="metodologia" class="py-32 md:py-48 min-h-[90vh] flex items-center relative z-40 bg-white overflow-visible">
+            
+            <!-- SVG Invertido (scale-y-[-1]) funde perfeitamente com a secção de cima -->
+            <svg class="absolute top-[-25%] left-0 w-full h-[150%] text-black opacity-[0.03] pointer-events-none transform scale-y-[-1] z-0" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="currentColor" stroke-width="80" fill="none" stroke-linecap="round"/>
+                <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="currentColor" stroke-width="120" fill="none" stroke-linecap="round"/>
+            </svg>
+
+            <div class="container mx-auto px-6 max-w-6xl relative z-10">
+                <div class="flex flex-col lg:flex-row items-center gap-16 lg:gap-8">
+                    <div class="w-full lg:w-5/12 reveal-on-scroll">
+                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Metodologia</h3>
+                        <h2 class="font-display font-black text-5xl md:text-6xl text-gray-900 mb-6 leading-tight">
+                            O Código <span class="text-brand-dark">PIXT</span>
+                        </h2>
+                        <p class="font-sans text-gray-600 text-lg leading-relaxed max-w-md border-l-2 border-brand pl-4">
+                            A nossa arquitetura de implementação garante que cada Agente de IA não seja apenas uma ferramenta isolada, mas uma extensão orgânica e autónoma do seu core business.
+                        </p>
+                    </div>
+
+                    <div class="w-full lg:w-7/12 flex min-h-[500px] items-center justify-center py-10 reveal-right">
+                        <div class="grid [grid-template-areas:'stack'] place-items-center opacity-100 w-full max-w-md relative md:left-[-40px] pt-16 pb-48">
+                            <div class="relative flex h-36 w-64 md:w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 border-gray-200 bg-white shadow-2xl px-5 py-4 transition-all duration-700 hover:border-brand hover:bg-gray-50 [grid-area:stack] translate-x-0 translate-y-0 hover:!-translate-y-[60px] hover:!skew-y-0 hover:!scale-105 hover:!z-50 z-10 cursor-pointer group">
+                                <div class="flex items-center gap-3 relative z-10">
+                                    <span class="flex items-center justify-center rounded-full bg-brand text-black w-10 h-10 font-display font-black shadow-sm">T</span>
+                                    <p class="text-xl font-bold text-black group-hover:text-brand-dark">Technology</p>
+                                </div>
+                                <p class="text-base text-gray-700 relative z-10 font-medium leading-snug">Agentes autónomos de execução.</p>
+                            </div>
+
+                            <div class="relative flex h-36 w-64 md:w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 border-gray-200 bg-white shadow-2xl px-5 py-4 transition-all duration-700 hover:border-brand hover:bg-gray-50 [grid-area:stack] translate-x-[20px] translate-y-[30px] md:translate-x-[40px] md:translate-y-[50px] hover:!-translate-y-[30px] hover:!skew-y-0 hover:!scale-105 hover:!z-50 z-20 cursor-pointer group">
+                                <div class="flex items-center gap-3 relative z-10">
+                                    <span class="flex items-center justify-center rounded-full bg-brand text-black w-10 h-10 font-display font-black shadow-sm">X</span>
+                                    <p class="text-xl font-bold text-black group-hover:text-brand-dark">X-Ray</p>
+                                </div>
+                                <p class="text-base text-gray-700 relative z-10 font-medium leading-snug">Diagnóstico profundo de dados ocultos.</p>
+                            </div>
+
+                            <div class="relative flex h-36 w-64 md:w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 border-gray-200 bg-white shadow-2xl px-5 py-4 transition-all duration-700 hover:border-brand hover:bg-gray-50 [grid-area:stack] translate-x-[40px] translate-y-[60px] md:translate-x-[80px] md:translate-y-[100px] hover:!-translate-y-[10px] hover:!skew-y-0 hover:!scale-105 hover:!z-50 z-30 cursor-pointer group">
+                                <div class="flex items-center gap-3 relative z-10">
+                                    <span class="flex items-center justify-center rounded-full bg-brand text-black w-10 h-10 font-display font-black shadow-sm">I</span>
+                                    <p class="text-xl font-bold text-black group-hover:text-brand-dark">Intelligence</p>
+                                </div>
+                                <p class="text-base text-gray-700 relative z-10 font-medium leading-snug">IA Generativa aplicada ao core business.</p>
+                            </div>
+
+                            <div class="relative flex h-36 w-64 md:w-[22rem] -skew-y-[8deg] select-none flex-col justify-between rounded-xl border-2 border-gray-200 bg-white shadow-2xl px-5 py-4 transition-all duration-700 hover:border-brand hover:bg-gray-50 [grid-area:stack] translate-x-[60px] translate-y-[90px] md:translate-x-[120px] md:translate-y-[150px] hover:!-translate-y-[30px] hover:!skew-y-0 hover:!scale-105 hover:!z-50 z-40 cursor-pointer group">
+                                <div class="flex items-center gap-3 relative z-10">
+                                    <span class="flex items-center justify-center rounded-full bg-brand text-black w-10 h-10 font-display font-black shadow-sm">P</span>
+                                    <p class="text-xl font-bold text-black group-hover:text-brand-dark">Process</p>
+                                </div>
+                                <p class="text-base text-gray-700 relative z-10 font-medium leading-snug">Mapeamento neural de ineficiências.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. SECÇÃO: AGENTES (Zoom Rápido Branco para Ecrã Preto) -->
+        <section id="agentes-zoom" class="relative w-full bg-dark z-50" style="height: 150vh;">
+            <!-- Linhas externas — fora do sticky, sem clip, criam continuidade com dobras vizinhas -->
+            <svg style="position:absolute;top:-25vh;left:0;width:100%;height:150vh;opacity:0.03;pointer-events:none;z-index:2;" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="white" stroke-width="80" fill="none" stroke-linecap="round"/>
+                <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="white" stroke-width="120" fill="none" stroke-linecap="round"/>
+            </svg>
+
+            <div class="sticky top-0 w-full h-screen overflow-hidden bg-dark flex flex-col items-center justify-center">
+                
+                <div id="agentes-content" class="absolute inset-0 w-full h-full flex flex-col opacity-0 transition-opacity duration-700 bg-dark pt-[15vh]">
+                    
+                    <!-- SVG normal (scale-y-[1]) funde perfeitamente com a dobra branca invertida -->
+                    <svg class="absolute top-[-25%] left-0 w-full h-[150%] text-white opacity-[0.03] pointer-events-none z-0" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="currentColor" stroke-width="80" fill="none" stroke-linecap="round"/>
+                        <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="currentColor" stroke-width="120" fill="none" stroke-linecap="round"/>
+                    </svg>
+
+                    <div class="container mx-auto px-6 max-w-7xl z-10 shrink-0 text-center">
+                        <p class="text-brand font-bold tracking-widest uppercase text-sm mb-4">Nossos Agentes</p>
+                        <p class="text-white font-display text-3xl md:text-5xl font-bold max-w-3xl mx-auto leading-tight">
+                            Força de trabalho sintética desenvolvida para resolver problemas específicos.
+                        </p>
+                    </div>
+
+                    <div class="relative w-full flex-grow flex items-center justify-center mt-8 md:mt-12 overflow-hidden z-10">
+                        <div id="stagger-cards-wrapper" class="relative w-full h-[400px] md:h-[500px] perspective-1000"></div>
+                        
+                        <div class="absolute bottom-10 left-1/2 flex -translate-x-1/2 gap-4 z-50">
+                            <button id="stagger-prev" class="flex h-12 w-12 items-center justify-center text-white bg-[#0f0f11] border border-white/10 hover:bg-brand hover:border-brand hover:text-black rounded-full transition-all duration-300 shadow-md group">
+                                <svg class="transform group-hover:-translate-x-1 transition-transform" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                            </button>
+                            <button id="stagger-next" class="flex h-12 w-12 items-center justify-center text-white bg-[#0f0f11] border border-white/10 hover:bg-brand hover:border-brand hover:text-black rounded-full transition-all duration-300 shadow-md group">
+                                <svg class="transform group-hover:translate-x-1 transition-transform" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- A MÁSCARA DE ZOOM -->
+                <div id="zoom-mask-wrapper" class="absolute inset-0 w-full h-full z-[60] flex items-center justify-center pointer-events-none will-change-transform" style="transform-origin: 50% 65%;">
+                    <svg viewBox="0 0 1000 600" class="w-[100vw] h-[100vh] min-w-[1200px] z-10 relative" preserveAspectRatio="xMidYMid slice">
+                        <defs>
+                            <mask id="textMask">
+                                <rect width="100%" height="100%" fill="white" />
+                                <text x="50%" y="35%" text-anchor="middle" dominant-baseline="central" font-family="'Syncopate', sans-serif" font-weight="700" font-size="120" fill="black" letter-spacing="-2">NOSSOS</text>
+                                <text x="50%" y="65%" text-anchor="middle" dominant-baseline="central" font-family="'Syncopate', sans-serif" font-weight="700" font-size="130" fill="black" letter-spacing="-2">AGENTES</text>
+                            </mask>
+                        </defs>
+                        <g mask="url(#textMask)">
+                            <rect width="100%" height="100%" fill="#ffffff" />
+                            <!-- Linhas inseridas no fundo branco da máscara -->
+                            <svg x="0" y="-25%" width="100%" height="150%" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice">
+                                <g transform="scale(1, 1)">
+                                    <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="#000000" stroke-width="80" fill="none" stroke-linecap="round" opacity="0.03"/>
+                                    <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="#000000" stroke-width="120" fill="none" stroke-linecap="round" opacity="0.03"/>
+                                </g>
+                            </svg>
+                        </g>
+                    </svg>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 8. DOBRA 2: Cubo Interativo -->
+        <div id="dobra2-scroll-container" style="position:relative;width:100%;height:1000vh;background:#111211;">
+
+            <div id="dobra2-sticky" style="position:sticky;top:0;left:0;width:100%;height:100vh;overflow:hidden;">
+
+                <!-- Grid de fundo -->
+                <div style="position:absolute;inset:0;z-index:0;pointer-events:none;">
+                    <div style="position:absolute;inset:0;background-image:linear-gradient(to right,rgba(230,246,237,0.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(230,246,237,0.04) 1px,transparent 1px);background-size:5vw 5vw;-webkit-mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,#000 10%,transparent 100%);mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,#000 10%,transparent 100%);"></div>
+                    <div style="position:absolute;inset:0;background-image:linear-gradient(to right,rgba(198,244,50,0.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(198,244,50,0.04) 1px,transparent 1px);background-size:1.25vw 1.25vw;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 0%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 0%,transparent 100%);"></div>
+                </div>
+
+                <!-- Canvas Three.js (z:10) -->
+                <div id="dobra2-mount" style="position:absolute;inset:0;z-index:10;"></div>
+
+                <!-- Lanterna de mouse -->
+                <div id="dobra2-flashlight" style="position:absolute;inset:0;pointer-events:none;z-index:0;"></div>
+
+                <!-- Texto ATRÁS do cubo (z:5) — "Plataformas de tarefas também" -->
+                <div id="d2-bg-text" class="hero-text-overlay" style="position:absolute;inset:0;z-index:5;pointer-events:none;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;">
+                    <h2 id="d2-reveal-text" style="font-size:clamp(2rem,6vw,5rem);font-weight:700;color:#E6F6ED;text-align:center;white-space:nowrap;clip-path:inset(0 100% 0 0);">
+                        Plataformas de tarefas <br>
+                        <span style="color:#c6f432;font-style:italic;font-family:serif;">também</span>
+                    </h2>
+                </div>
+
+                <!-- Fase 1 – Analisamos (p2: 0–25%) -->
+                <div id="d2-t1" class="hero-text-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:10%;z-index:20;pointer-events:none;opacity:1;">
+                    <div style="text-align:center;">
+                        <h2 style="font-size:clamp(2rem,5vw,4rem);font-weight:500;color:#E6F6ED;line-height:1.2;">Analisamos seu processo e</h2>
+                        <h2 style="font-size:clamp(2.5rem,6vw,5rem);font-weight:700;color:#c6f432;margin-top:0.25em;line-height:1.2;">integramos a sua plataforma</h2>
+                    </div>
+                </div>
+
+            </div><!-- /dobra2-sticky -->
+        </div><!-- /dobra2-scroll-container -->
+
+        <!-- 9. NOVA SECÇÃO: TIMELINE (A Jornada PIXT) -->
+        <section id="jornada" class="py-24 bg-brand text-black relative overflow-visible z-40 border-t border-black/10">
+            
+            <!-- SVG Normal (scale-y-1) encaixa com o invertido da secção de cima -->
+            <svg class="absolute top-[-25%] left-0 w-full h-[150%] text-black opacity-[0.06] pointer-events-none z-0" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="currentColor" stroke-width="80" fill="none" stroke-linecap="round"/>
+                <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="currentColor" stroke-width="120" fill="none" stroke-linecap="round"/>
+            </svg>
+
+            <div class="container mx-auto px-6 max-w-7xl relative z-10" id="timeline-container">
+                <div class="max-w-4xl mx-auto text-center mb-24 reveal-on-scroll">
+                    <h2 class="font-display text-4xl md:text-6xl font-bold leading-tight text-dark mb-4">
+                        A Jornada PIXT
+                    </h2>
+                    <p class="text-dark/70 text-lg md:text-xl font-medium">
+                        Um processo estruturado para transformar sua operação
+                    </p>
+                </div>
+
+                <div id="timeline-wrapper" class="relative max-w-5xl mx-auto pb-20">
+                    <div class="absolute left-8 md:left-12 top-0 bottom-0 w-[2px] bg-black/10" style="transform: translateX(-50%); mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);"></div>
+                    <div id="timeline-progress" class="absolute left-8 md:left-12 top-0 w-[2px] bg-black origin-top shadow-[0_0_15px_rgba(0,0,0,0.5)]" style="transform: translateX(-50%); height: 0%;"></div>
+
+                    <div class="flex justify-start pt-10 md:pt-32 md:gap-10 relative reveal-on-scroll">
+                        <div class="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
+                            <div class="h-10 absolute left-3 md:left-7 w-10 rounded-full bg-brand flex items-center justify-center">
+                                <div class="h-4 w-4 rounded-full bg-black border border-black/20 p-2"></div>
+                            </div>
+                            <h3 class="hidden md:block text-2xl md:pl-24 md:text-5xl font-display font-black text-black/20">01</h3>
+                        </div>
+                        <div class="relative pl-20 pr-4 md:pl-4 w-full">
+                            <h3 class="md:hidden block text-3xl mb-2 text-left font-display font-black text-black/20">01</h3>
+                            <h4 class="text-2xl md:text-4xl font-bold text-dark mb-4">Identificação</h4>
+                            <p class="text-dark/80 text-lg md:text-xl leading-relaxed">Mapeamento completo dos processes e gargalos da sua empresa.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-start pt-20 md:pt-32 md:gap-10 relative reveal-on-scroll">
+                        <div class="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
+                            <div class="h-10 absolute left-3 md:left-7 w-10 rounded-full bg-brand flex items-center justify-center">
+                                <div class="h-4 w-4 rounded-full bg-black border border-black/20 p-2"></div>
+                            </div>
+                            <h3 class="hidden md:block text-2xl md:pl-24 md:text-5xl font-display font-black text-black/20">02</h3>
+                        </div>
+                        <div class="relative pl-20 pr-4 md:pl-4 w-full">
+                            <h3 class="md:hidden block text-3xl mb-2 text-left font-display font-black text-black/20">02</h3>
+                            <h4 class="text-2xl md:text-4xl font-bold text-dark mb-4">Planejamento</h4>
+                            <p class="text-dark/80 text-lg md:text-xl leading-relaxed">Definição de estratégias e soluções de Inteligência Artificial personalizadas.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-start pt-20 md:pt-32 md:gap-10 relative reveal-on-scroll">
+                        <div class="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
+                            <div class="h-10 absolute left-3 md:left-7 w-10 rounded-full bg-brand flex items-center justify-center">
+                                <div class="h-4 w-4 rounded-full bg-black border border-black/20 p-2"></div>
+                            </div>
+                            <h3 class="hidden md:block text-2xl md:pl-24 md:text-5xl font-display font-black text-black/20">03</h3>
+                        </div>
+                        <div class="relative pl-20 pr-4 md:pl-4 w-full">
+                            <h3 class="md:hidden block text-3xl mb-2 text-left font-display font-black text-black/20">03</h3>
+                            <h4 class="text-2xl md:text-4xl font-bold text-dark mb-4">Proposta</h4>
+                            <p class="text-dark/80 text-lg md:text-xl leading-relaxed">Apresentação detalhada do projeto de automação e o respetivo investimento.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-start pt-20 md:pt-32 md:gap-10 relative reveal-on-scroll">
+                        <div class="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
+                            <div class="h-10 absolute left-3 md:left-7 w-10 rounded-full bg-brand flex items-center justify-center">
+                                <div class="h-4 w-4 rounded-full bg-black border border-black/20 p-2"></div>
+                            </div>
+                            <h3 class="hidden md:block text-2xl md:pl-24 md:text-5xl font-display font-black text-black/20">04</h3>
+                        </div>
+                        <div class="relative pl-20 pr-4 md:pl-4 w-full">
+                            <h3 class="md:hidden block text-3xl mb-2 text-left font-display font-black text-black/20">04</h3>
+                            <h4 class="text-2xl md:text-4xl font-bold text-dark mb-4">Implementação</h4>
+                            <p class="text-dark/80 text-lg md:text-xl leading-relaxed">Desenvolvimento tecnológico e integração dos agentes sintéticos no seu sistema.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-start pt-20 md:pt-32 md:gap-10 relative reveal-on-scroll">
+                        <div class="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
+                            <div class="h-10 absolute left-3 md:left-7 w-10 rounded-full bg-brand flex items-center justify-center">
+                                <div class="h-4 w-4 rounded-full bg-black border border-black/20 p-2"></div>
+                            </div>
+                            <h3 class="hidden md:block text-2xl md:pl-24 md:text-5xl font-display font-black text-black/20">05</h3>
+                        </div>
+                        <div class="relative pl-20 pr-4 md:pl-4 w-full">
+                            <h3 class="md:hidden block text-3xl mb-2 text-left font-display font-black text-black/20">05</h3>
+                            <h4 class="text-2xl md:text-4xl font-bold text-dark mb-4">Treinamento</h4>
+                            <p class="text-dark/80 text-lg md:text-xl leading-relaxed">Capacitação da sua equipe para interagir e tirar o máximo aproveitamento da IA.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-start pt-20 md:pt-32 md:gap-10 relative reveal-on-scroll">
+                        <div class="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
+                            <div class="h-10 absolute left-3 md:left-7 w-10 rounded-full bg-brand flex items-center justify-center">
+                                <div class="h-4 w-4 rounded-full bg-black border border-black/20 p-2"></div>
+                            </div>
+                            <h3 class="hidden md:block text-2xl md:pl-24 md:text-5xl font-display font-black text-black/20">06</h3>
+                        </div>
+                        <div class="relative pl-20 pr-4 md:pl-4 w-full">
+                            <h3 class="md:hidden block text-3xl mb-2 text-left font-display font-black text-black/20">06</h3>
+                            <h4 class="text-2xl md:text-4xl font-bold text-dark mb-4">Ativação</h4>
+                            <p class="text-dark/80 text-lg md:text-xl leading-relaxed">Lançamento oficial da operação sintética e início da manutenção contínua.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. SECÇÃO: QUEM SOMOS (Zoom Rápido Verde para Layout Duplo com Imagem) -->
+        <section id="quem-somos-zoom" class="relative w-full bg-white z-50" style="height: 200vh;">
+            <!-- Linhas externas — fora do sticky, sem clip, criam continuidade com dobras vizinhas -->
+            <svg style="position:absolute;top:-25vh;left:0;width:100%;height:150vh;opacity:0.03;pointer-events:none;z-index:2;transform:scaleY(-1);transform-origin:center center;" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="black" stroke-width="80" fill="none" stroke-linecap="round"/>
+                <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="black" stroke-width="120" fill="none" stroke-linecap="round"/>
+            </svg>
+
+            <div class="sticky top-0 w-full h-screen overflow-visible flex flex-col items-center justify-center">
+                <!-- SVG Invertido (scale-y-[-1]) — movido para o sticky (overflow-visible) em vez do container interno -->
+                <svg class="absolute top-[-25%] left-0 w-full h-[150%] text-black opacity-[0.03] pointer-events-none transform scale-y-[-1] z-0" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="currentColor" stroke-width="80" fill="none" stroke-linecap="round"/>
+                    <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="currentColor" stroke-width="120" fill="none" stroke-linecap="round"/>
+                </svg>
+
+                <div id="qs-content-container" class="absolute inset-0 w-full h-full flex flex-col opacity-0 transition-opacity duration-700 bg-white pt-16 md:pt-24 z-10 overflow-y-auto no-scrollbar">
+
+                    <div class="container mx-auto px-6 max-w-7xl relative z-10 h-full flex flex-col justify-center py-12 md:py-0">
+                        <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 my-auto">
+                            
+                            <!-- Left: Foto/Logo PIXT -->
+                            <div class="w-full lg:w-5/12 flex justify-center lg:justify-start">
+                                <div class="w-full max-w-[450px] aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl relative border border-gray-200 bg-gray-50">
+                                     <div class="absolute inset-0 bg-brand/10 z-10 mix-blend-multiply"></div>
+                                     <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop" alt="Equipa PIXT" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                                     <div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-lg z-20 flex items-center gap-3 border border-white/50">
+                                         <img src="Logo 2 preto.png" alt="PIXT Logo" class="h-10 object-contain">
+                                         <p class="text-[10px] text-gray-500 uppercase tracking-widest">Sintética</p>
+                                     </div>
+                                </div>
+                            </div>
+
+                            <!-- Right: Text Copy -->
+                            <div class="w-full lg:w-7/12 flex flex-col justify-center">
+                                <h2 class="text-xs font-bold text-brand-dark tracking-[0.3em] mb-4 uppercase">Quem Somos</h2>
+                                <h3 class="text-4xl md:text-5xl font-display font-black text-gray-900 mb-8 leading-tight">
+                                    A engrenagem por trás da <span class="text-brand-dark">evolução.</span>
+                                </h3>
+                                
+                                <div class="space-y-5 text-gray-600 text-sm md:text-base leading-relaxed max-h-[50vh] overflow-y-auto pr-4 no-scrollbar">
+                                    <p><strong>A Pixt é uma empresa de tecnologia fundada por três especialistas que unem visão estratégica, técnica e criativa:</strong> Caio César (CTO), Wallace Ferreira (CRO) e Paulo Cesar (Diretor Criativo).</p>
+                                    
+                                    <p>Nascemos com um propósito claro: facilitar a escala das empresas por meio de agentes de IA personalizados, desenvolvidos de acordo com os gargalos e desafios específicos de cada operação.</p>
+
+                                    <p>Viemos de anos de experiência dentro do marketing, passando por empresas de renome ao longo da nossa jornada. Ao atender milhares de clientes, identificamos um gargalo em comum que limitava o crescimento das empresas: <strong>falhas no operacional</strong>. Perdas no tempo de resposta para leads qualificados, baixa padronização na qualidade da operação e desorganização de dados faziam com que oportunidades reais fossem desperdiçadas.</p>
+
+                                    <div class="pl-5 border-l-[3px] border-brand py-3 my-6 bg-gray-50 rounded-r-xl">
+                                        <p class="text-gray-900 font-medium italic text-lg">"Empresas grandes tomam decisões baseadas em dados, não em achismo — e foi justamente para resolver esse problema que criamos a Pixt."</p>
+                                    </div>
+
+                                    <p>Já ajudamos mais de 100 empresas a reduzir custos operacionais, diminuir drasticamente o tempo de resposta e fortalecer o setor comercial com uma qualificação de leads mais inteligente — aumentando a margem de contribuição e a eficiência das operações.</p>
+
+                                    <p>Desenvolvemos agentes de inteligência artificial sob medida, criados para otimizar processos, automatizar atendimentos e potencializar resultados. Acreditamos que empresas não devem perder tempo com um operacional ineficiente.</p>
+                                    
+                                    <p>Nosso foco é reduzir tempo e custos, organizar e potencializar o processo comercial e permitir que você concentre energia no que realmente importa: crescer o seu negócio com previsibilidade e escala.</p>
+
+                                    <p class="font-display font-bold text-gray-900 text-xl mt-8 pt-6 border-t border-gray-200">
+                                        Na Pixt, tecnologia não é apenas automação — <span class="text-brand-dark">é estratégia para crescimento.</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="qs-white-layer" class="absolute inset-0 bg-white z-[20]"></div>
+
+                <div id="qs-zoom-mask-wrapper" class="absolute inset-0 w-full h-full z-[30] flex items-center justify-center pointer-events-none will-change-transform" style="transform-origin: 50% 50%;">
+                    <svg viewBox="0 0 1000 600" class="w-[100vw] h-[100vh] min-w-[1200px]" preserveAspectRatio="xMidYMid slice">
+                        <defs>
+                            <mask id="qsTextMask">
+                                <rect width="100%" height="100%" fill="white" />
+                                <text x="50%" y="35%" text-anchor="middle" dominant-baseline="central" font-family="'Syncopate', sans-serif" font-weight="700" font-size="120" fill="black" letter-spacing="-2">QUEM</text>
+                                <text x="50%" y="65%" text-anchor="middle" dominant-baseline="central" font-family="'Syncopate', sans-serif" font-weight="700" font-size="130" fill="black" letter-spacing="-2">SOMOS</text>
+                            </mask>
+                        </defs>
+                        <g mask="url(#qsTextMask)">
+                            <rect width="100%" height="100%" fill="#c6f432" />
+                            <svg x="0" y="-25%" width="100%" height="150%" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" overflow="visible">
+                                <g transform="scale(1, -1) translate(0, -800)">
+                                    <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="#000000" stroke-width="80" fill="none" stroke-linecap="round" opacity="0.04"/>
+                                    <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="#000000" stroke-width="120" fill="none" stroke-linecap="round" opacity="0.04"/>
+                                </g>
+                            </svg>
+                        </g>
+                    </svg>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 11. Contacto / Upgrade -->
+        <section id="contact" class="py-24 relative z-40 bg-white border-t border-black/5 overflow-visible">
+            
+            <!-- SVG normal (scale-y-1) encaixa com o invertido da secção de cima -->
+            <svg class="absolute top-[-25%] left-0 w-full h-[150%] text-black opacity-[0.03] pointer-events-none z-0" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="currentColor" stroke-width="80" fill="none" stroke-linecap="round"/>
+                <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="currentColor" stroke-width="120" fill="none" stroke-linecap="round"/>
+            </svg>
+
+            <div class="container mx-auto px-6 relative z-10 max-w-5xl">
+                
+                <div class="bg-gray-50 rounded-[3rem] p-10 md:p-14 flex flex-col md:flex-row items-center gap-12 shadow-2xl border border-gray-200">
+                    
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-6 leading-tight">
+                            Pronto para o <span class="bg-brand text-black px-3 py-1 rounded-xl inline-block mt-2 shadow-sm">Upgrade?</span>
+                        </h2>
+                        <p class="text-gray-600 font-medium text-lg mb-8">
+                            Preencha o formulário e a nossa equipa de especialistas entrará em contacto para mapear os seus gargalos.
+                        </p>
+                        <div class="hidden md:flex gap-4">
+                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-800 border border-gray-200 shadow-sm">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <div class="w-12 h-12 bg-brand rounded-full flex items-center justify-center text-black shadow-sm">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2 bg-white p-8 rounded-[2rem] shadow-xl border border-gray-100">
+                         <form id="contact-form" class="space-y-5" onsubmit="handleContactSubmit(event)">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wide">Identificação</label>
+                                <input type="text" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-900 focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none transition-all placeholder-gray-400" placeholder="O seu Nome" required />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wide">Empresa</label>
+                                <input type="text" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-900 focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none transition-all placeholder-gray-400" placeholder="Nome da sua empresa" required />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wide">Email Corporativo</label>
+                                <input type="email" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-900 focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none transition-all placeholder-gray-400" placeholder="email@empresa.com" required />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-wide">WhatsApp</label>
+                                <input id="phone-field" type="tel" inputmode="numeric" maxlength="15" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-4 text-gray-900 focus:border-brand focus:ring-1 focus:ring-brand focus:outline-none transition-all placeholder-gray-400" placeholder="(00) 00000-0000" required />
+                            </div>
+
+                            <button type="submit" class="w-full py-4 mt-2 bg-brand hover:bg-brand-hover text-black font-bold text-lg rounded-xl transition-all shadow-[0_5px_15px_rgba(198,244,50,0.3)]">
+                                Solicitar Diagnóstico
+                            </button>
+                         </form>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    <!-- CELULAR FIXO — anima da segunda dobra para a foto1 -->
+    <div id="fixed-phone" style="position:fixed;z-index:999;pointer-events:none;width:260px;height:530px;opacity:0;will-change:transform,opacity;top:0;left:0;transform-origin:center center;">
+        <!-- Frame -->
+        <div style="position:absolute;inset:0;border-radius:40px;background:linear-gradient(155deg,#5c5c5e 0%,#1c1c1e 18%,#3c3c3e 45%,#1a1a1c 72%,#2e2e30 100%);box-shadow:0 0 0 1px rgba(255,255,255,0.12),0 60px 120px rgba(0,0,0,0.9),inset 0 1px 0 rgba(255,255,255,0.18);"></div>
+        <!-- Screen -->
+        <div style="position:absolute;top:12px;left:12px;right:12px;bottom:12px;border-radius:30px;overflow:hidden;background:#fff;">
+            <div id="fp-chat" style="position:absolute;inset:0;display:flex;flex-direction:column;transition:opacity 0.3s;">
+                <div class="phone-chat-header">
+                    <div class="phone-chat-avatar">P</div>
+                    <div>
+                        <div style="font-size:12px;font-weight:700;color:#111;line-height:1.2">PIXT Booker</div>
+                        <div style="font-size:9px;color:#c6a800;font-weight:600">digitando...</div>
+                    </div>
+                </div>
+                <div class="phone-chat-messages">
+                    <div class="chat-out">E como funciona essa integração?</div>
+                    <div class="chat-in">1. <b>CRM</b> — qualifica e joga no funil.<br><br>2. <b>Agenda Direta</b> — marca no Calendly automaticamente.</div>
+                    <div class="chat-out">A opção 2 salva minha vida!</div>
+                </div>
+            </div>
+        </div>
+        <!-- Glare -->
+        <div style="position:absolute;top:12px;left:12px;right:12px;bottom:12px;border-radius:30px;background:linear-gradient(135deg,rgba(255,255,255,0.26) 0%,rgba(255,255,255,0.06) 28%,transparent 50%);pointer-events:none;z-index:40;"></div>
+        <!-- Buttons -->
+        <div class="phone-btn-silent"></div>
+        <div class="phone-btn-vol-up"></div>
+        <div class="phone-btn-vol-dn"></div>
+        <div class="phone-btn-power"></div>
+    </div>
+
+    </main>
+
+
+    <!-- 12. Footer -->
+    <footer class="border-t border-black/5 bg-white py-12 relative z-40 overflow-visible">
+        
+        <svg class="absolute top-[-25%] left-0 w-full h-[150%] text-black opacity-[0.03] pointer-events-none transform scale-y-[-1] z-0" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <path d="M -100 200 C 200 400 300 -50 500 200 S 700 600 1000 400" stroke="currentColor" stroke-width="80" fill="none" stroke-linecap="round"/>
+            <path d="M -50 600 C 250 800 450 300 700 600 S 900 900 1100 700" stroke="currentColor" stroke-width="120" fill="none" stroke-linecap="round"/>
+        </svg>
+
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <a href="#" class="flex items-center gap-3 mb-4">
+                        <img src="Logo 2 preto.png" alt="PIXT Logo" class="h-16 object-contain">
+                    </a>
+                    <p class="text-sm text-gray-500 max-w-sm mb-6">
+                        Tecnologia não é apenas automação — é estratégia para crescimento em grande escala.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://www.instagram.com/pixt.ia" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-brand hover:text-black transition-all">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-brand hover:text-black transition-all">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-gray-900 font-bold mb-4 text-sm uppercase tracking-wider">Produtos</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="#agentes-zoom" class="hover:text-brand-dark transition-colors">Vendas+</a></li>
+                        <li><a href="#agentes-zoom" class="hover:text-brand-dark transition-colors">LeadFlow</a></li>
+                        <li><a href="#agentes-zoom" class="hover:text-brand-dark transition-colors">Booker</a></li>
+                        <li><a href="#agentes-zoom" class="hover:text-brand-dark transition-colors">ExpertAI</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-gray-900 font-bold mb-4 text-sm uppercase tracking-wider">Contato</h4>
+                    <ul class="space-y-3 text-sm text-gray-500">
+                        <li><a href="mailto:contato.pixt@gmail.com" class="hover:text-brand-dark transition-colors">contato.pixt@gmail.com</a></li>
+                        <li>São José dos Campos - SP</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-black/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                <p>© 2026 PIXT. Todos os direitos reservados.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-gray-800 transition-colors">Termos de Serviço</a>
+                    <a href="#" class="hover:text-gray-800 transition-colors">Política de Privacidade</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script para interatividade Vanilla -->
+    <script>
+        // Máscara de telefone: (00) 00000-0000 — máx 11 dígitos
+        const phoneField = document.getElementById('phone-field');
+        if (phoneField) {
+            phoneField.addEventListener('input', function(e) {
+                let v = this.value.replace(/\D/g, '').slice(0, 11);
+                if (v.length > 10) {
+                    v = v.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+                } else if (v.length > 6) {
+                    v = v.replace(/^(\d{2})(\d{4})(\d*)$/, '($1) $2-$3');
+                } else if (v.length > 2) {
+                    v = v.replace(/^(\d{2})(\d*)$/, '($1) $2');
+                } else if (v.length > 0) {
+                    v = v.replace(/^(\d*)$/, '($1');
+                }
+                this.value = v;
+            });
+        }
+
+        // Redirect ao /obrigado após envio do formulário
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            window.location.href = 'obrigado.html';
+        }
+
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal-on-scroll, .reveal-section, .reveal-right').forEach(el => observer.observe(el));
+        });
+
+        // Lógica da Animação do Scroll Zoom (AGENTES)
+        const zoomSection = document.getElementById('agentes-zoom');
+        const zoomMaskWrapper = document.getElementById('zoom-mask-wrapper');
+        const agentesContent = document.getElementById('agentes-content');
+
+        if (zoomSection && zoomMaskWrapper && agentesContent) {
+            var _agTick = false, _agMaxP = 0;
+            function _agUpdate() {
+                _agTick = false;
+                const rect = zoomSection.getBoundingClientRect();
+                const scrollRange = rect.height - window.innerHeight;
+                const scrollStart = rect.top;
+                let rawP;
+                if (scrollStart > 0) rawP = 0;
+                else if (scrollStart < -scrollRange) rawP = 1;
+                else rawP = Math.abs(scrollStart) / scrollRange;
+                // Trava: nunca retrocede
+                _agMaxP = Math.max(_agMaxP, rawP);
+                const p = _agMaxP;
+                const targetScale = 1 + Math.pow(p * 22, 3);
+                zoomMaskWrapper.style.transform = `scale(${targetScale})`;
+                agentesContent.style.opacity = p > 0.05 ? Math.min((p - 0.05) * 5, 1) : 0;
+                zoomMaskWrapper.style.opacity = p > 0.40 ? Math.max(0, 1 - ((p - 0.40) * 4)) : 1;
+            }
+            window.addEventListener('scroll', () => {
+                if (!_agTick) { _agTick = true; requestAnimationFrame(_agUpdate); }
+            }, { passive: true });
+        }
+
+        // Lógica da Animação do Scroll Zoom (QUEM SOMOS)
+        const qsZoomSection = document.getElementById('quem-somos-zoom');
+        const qsMaskWrapper = document.getElementById('qs-zoom-mask-wrapper');
+        const qsContent = document.getElementById('qs-content-container');
+        const qsWhiteLayer = document.getElementById('qs-white-layer');
+
+        if (qsZoomSection && qsMaskWrapper && qsContent && qsWhiteLayer) {
+            var _qsTick = false, _qsMaxP = 0;
+            function _qsUpdate() {
+                _qsTick = false;
+                const rect = qsZoomSection.getBoundingClientRect();
+                const scrollRange = rect.height - window.innerHeight;
+                const scrollStart = rect.top;
+                let rawP;
+                if (scrollStart > 0) rawP = 0;
+                else if (scrollStart < -scrollRange) rawP = 1;
+                else rawP = Math.abs(scrollStart) / scrollRange;
+                // Trava: nunca retrocede
+                _qsMaxP = Math.max(_qsMaxP, rawP);
+                const p = _qsMaxP;
+                const targetScale = 1 + Math.pow(p * 22, 3);
+                qsMaskWrapper.style.transform = `scale(${targetScale})`;
+                qsContent.style.opacity = p > 0.05 ? Math.min((p - 0.05) * 5, 1) : 0;
+                qsWhiteLayer.style.opacity = p > 0.30 ? Math.max(0, 1 - ((p - 0.30) * 5)) : 1;
+                qsMaskWrapper.style.opacity = p > 0.40 ? Math.max(0, 1 - ((p - 0.40) * 4)) : 1;
+            }
+            window.addEventListener('scroll', () => {
+                if (!_qsTick) { _qsTick = true; requestAnimationFrame(_qsUpdate); }
+            }, { passive: true });
+        }
+
+        // Animação 3D do scroll-card desativada (card exibido flat após efeito de zoom)
+
+        // Lógica da Timeline (Jornada)
+        const timelineWrapper = document.getElementById('timeline-wrapper');
+        const timelineProgress = document.getElementById('timeline-progress');
+
+        if (timelineWrapper && timelineProgress) {
+            var _tlTick = false, _tlMaxP = 0;
+            function _tlUpdate() {
+                _tlTick = false;
+                const rect = timelineWrapper.getBoundingClientRect();
+                const startOffset = window.innerHeight * 0.5;
+                let p = Math.max(0, Math.min(1, (startOffset - rect.top) / rect.height));
+                // Trava: nunca retrocede
+                _tlMaxP = Math.max(_tlMaxP, p);
+                timelineProgress.style.height = `${_tlMaxP * 100}%`;
+                timelineProgress.style.opacity = _tlMaxP > 0 ? 1 : 0;
+            }
+            window.addEventListener('scroll', () => {
+                if (!_tlTick) { _tlTick = true; requestAnimationFrame(_tlUpdate); }
+            }, { passive: true });
+        }
+
+        // Lógica do Componente Stagger Cards (AGENTES)
+        const staggerWrapper = document.getElementById('stagger-cards-wrapper');
+        const btnPrev = document.getElementById('stagger-prev');
+        const btnNext = document.getElementById('stagger-next');
+        
+        const baseAgentsData = [
+            {
+                subtitle: "Produto 1",
+                title: "Vendas+",
+                content: "Agente Vendedor com IA que automatiza o processo de ponta a ponta, do atendimento até a venda final.",
+                svg: `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`
+            },
+            {
+                subtitle: "Produto 2",
+                title: "LeadFlow",
+                content: "Otimize o tempo do seu time de vendas (Closers) deixando a triagem pesada e a qualificação com a nossa IA.",
+                svg: `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>`
+            },
+            {
+                subtitle: "Produto 3",
+                title: "Booker",
+                content: "Elimine o gargalo logístico de marcar reuniões. Conversa, entende a necessidade e consulta disponibilidade em tempo real.",
+                svg: `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`
+            },
+            {
+                subtitle: "Produto 4",
+                title: "ExpertAI",
+                content: "Suporte técnico resolutivo. Treinamos este agente com toda a documentação, manuais e histórico da sua empresa.",
+                svg: `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/></svg>`
+            }
+        ];
+
+        let currentAgentsOrder = [
+            {...baseAgentsData[0], uid: 'uid-0'},
+            {...baseAgentsData[1], uid: 'uid-1'},
+            {...baseAgentsData[2], uid: 'uid-2'},
+            {...baseAgentsData[3], uid: 'uid-3'},
+            {...baseAgentsData[0], uid: 'uid-4'}
+        ]; 
+        
+        let cardSize = window.innerWidth >= 640 ? 360 : 300;
+
+        window.addEventListener("resize", () => {
+            cardSize = window.innerWidth >= 640 ? 360 : 300;
+            updateStaggerCards();
+        });
+
+        function initStaggerCards() {
+            if (!staggerWrapper) return;
+            staggerWrapper.innerHTML = '';
+
+            currentAgentsOrder.forEach((agent) => {
+                const card = document.createElement('div');
+                card.id = `stagger-card-${agent.uid}`;
+                card.innerHTML = `
+                    <div class="flex flex-col h-full">
+                        <div>
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="svg-container w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm transition-colors duration-700">
+                                    ${agent.svg}
+                                </div>
+                                <span class="subtitle-badge text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider transition-colors duration-700">${agent.subtitle}</span>
+                            </div>
+                            <h3 class="title-text font-display font-bold text-2xl md:text-3xl mb-4 transition-colors duration-700">${agent.title}</h3>
+                        </div>
+                        <p class="content-text text-sm md:text-base leading-relaxed flex-grow transition-colors duration-700">${agent.content}</p>
+                    </div>
+                `;
+                card.addEventListener('click', () => {
+                    const position = currentAgentsOrder.findIndex(a => a.uid === agent.uid) - Math.floor(currentAgentsOrder.length / 2);
+                    if (position !== 0) handleStaggerMove(position);
+                });
+                staggerWrapper.appendChild(card);
+            });
+            updateStaggerCards();
+        }
+
+        function handleStaggerMove(steps) {
+            if (steps > 0) {
+                for (let i = 0; i < steps; i++) currentAgentsOrder.push(currentAgentsOrder.shift());
+            } else {
+                for (let i = 0; i < Math.abs(steps); i++) currentAgentsOrder.unshift(currentAgentsOrder.pop());
+            }
+            updateStaggerCards();
+        }
+
+        function updateStaggerCards() {
+            currentAgentsOrder.forEach((agent, index) => {
+                const position = index - Math.floor(currentAgentsOrder.length / 2);
+                const isCenter = position === 0;
+                const card = document.getElementById(`stagger-card-${agent.uid}`);
+                if (!card) return;
+
+                const baseClasses = "absolute left-1/2 top-1/2 cursor-pointer rounded-2xl border-2 p-8 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col justify-between ";
+                
+                if (isCenter) {
+                    card.className = baseClasses + "z-50 bg-brand text-black border-brand hover:border-black/20 shadow-[0px_20px_50px_rgba(198,244,50,0.3)]";
+                    card.querySelector('.svg-container').className = "svg-container w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm transition-colors duration-700 bg-black text-brand";
+                    card.querySelector('.subtitle-badge').className = "subtitle-badge text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider transition-colors duration-700 bg-black/10 text-black border border-black/10";
+                    card.querySelector('.title-text').className = "title-text font-display font-bold text-2xl md:text-3xl mb-4 transition-colors duration-700 text-black";
+                    card.querySelector('.content-text').className = "content-text text-sm md:text-base leading-relaxed flex-grow transition-colors duration-700 text-black/80 font-medium";
+                } else {
+                    card.className = baseClasses + "z-10 bg-[#0f0f11] text-white border-white/10 hover:border-brand/50 shadow-[0px_10px_30px_rgba(0,0,0,0.8)]";
+                    card.querySelector('.svg-container').className = "svg-container w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm transition-colors duration-700 bg-white/5 border border-white/10 text-white group-hover:text-brand";
+                    card.querySelector('.subtitle-badge').className = "subtitle-badge text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider transition-colors duration-700 bg-white/5 text-gray-400 border border-transparent";
+                    card.querySelector('.title-text').className = "title-text font-display font-bold text-2xl md:text-3xl mb-4 transition-colors duration-700 text-white";
+                    card.querySelector('.content-text').className = "content-text text-sm md:text-base leading-relaxed flex-grow transition-colors duration-700 text-gray-400 font-normal";
+                }
+
+                const translateX = (cardSize / 1.5) * position;
+                const translateY = isCenter ? -40 : (position % 2 ? 15 : -15);
+                const rotate = isCenter ? 0 : (position % 2 ? 3 : -3);
+                const scale = isCenter ? 1.05 : 0.95;
+
+                card.style.width = `${cardSize}px`;
+                card.style.height = `${cardSize}px`;
+                card.style.transform = `translate(-50%, -50%) translateX(${translateX}px) translateY(${translateY}px) rotate(${rotate}deg) scale(${scale})`;
+                card.style.zIndex = 50 - Math.abs(position);
+                card.style.opacity = 1 - (Math.abs(position) * 0.15);
+            });
+        }
+
+        if (btnPrev && btnNext) {
+            btnPrev.addEventListener('click', () => handleStaggerMove(-1));
+            btnNext.addEventListener('click', () => handleStaggerMove(1));
+        }
+
+        initStaggerCards();
+
+    </script>
+
+    <script>
+
+        // =========================================================================
+        // ANIMAÇÃO DO CELULAR — 3 FASES:
+        //   Fase 1+2 : celular voa da 2ª dobra para a 3ª dobra → SOME (fade-out)
+        //   Fase 3   : LEITURA — imagem estática, pessoa lê o conteúdo
+        //   Após 3   : BOTÃO de clique aparece → abre modal Spline + cards
+        // =========================================================================
+        (function () {
+            var phone3El  = document.querySelector('.phone-3');
+            var fotoDobra = document.getElementById('foto-dobra');
+            var fp        = document.getElementById('fixed-phone');
+            var fpChat    = document.getElementById('fp-chat');
+            if (!phone3El || !fotoDobra || !fp) return;
+
+            function lerp(a, b, t)    { return a + (b - a) * t; }
+            function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+            function easeOut(t)       { return 1 - Math.pow(1 - t, 3); }
+            function easeInOut(t)     { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+
+            var startCX = 0, startCY = 0, startSc = 0.83, initialized = false;
+            var PHONE_Y_RATIO = 0.51;
+            var _fpMaxP = 0;
+
+            var _cachedStart = null, _cachedEnd = null, _cachedReadEnd = null;
+            function _invalidateCache() { _cachedStart = null; _cachedEnd = null; _cachedReadEnd = null; }
+            function getStartScroll() {
+                if (_cachedStart !== null) return _cachedStart;
+                var conceito = document.getElementById('conceito');
+                _cachedStart = conceito ? conceito.offsetTop + conceito.offsetHeight - window.innerHeight : 0;
+                return _cachedStart;
+            }
+            function getEndScroll()     { if (_cachedEnd !== null) return _cachedEnd; _cachedEnd = fotoDobra.offsetTop; return _cachedEnd; }
+            function getReadEndScroll() { if (_cachedReadEnd !== null) return _cachedReadEnd; _cachedReadEnd = fotoDobra.offsetTop + window.innerHeight * 1.5; return _cachedReadEnd; }
+
+            function update() {
+                var vh     = window.innerHeight;
+                var vw     = window.innerWidth;
+                var scrollY = window.scrollY || window.pageYOffset;
+
+                var startScroll   = getStartScroll();
+                var endScroll     = getEndScroll();
+                var readEndScroll = getReadEndScroll();
+
+                // ── Antes da animação: reset (apenas se nunca iniciou) ────────────
+                if (scrollY < startScroll - 20) {
+                    if (_fpMaxP < 0.01) {
+                        fp.style.opacity = '0';
+                        phone3El.style.opacity = '';
+                        setClickBtn(false);
+                        initialized = false;
+                    }
+                    return;
+                }
+
+                // ── Captura posição de partida uma vez ────────────────────────────
+                if (!initialized) {
+                    var r = phone3El.getBoundingClientRect();
+                    startCX = r.left + r.width  / 2;
+                    startCY = r.top  + r.height / 2;
+                    startSc = r.width / 260;
+                    initialized = true;
+                }
+
+                var targetCX = vw / 2;
+                var targetCY = vh * PHONE_Y_RATIO;
+                var targetSc = vw * 0.28 / 260;
+
+                // ── FASE 1+2: celular voa da 2ª dobra → chega na foto → SOME ──────
+                var rawP = clamp((scrollY - startScroll) / Math.max(endScroll - startScroll, 1), 0, 1);
+                // Trava: nunca retrocede
+                _fpMaxP = Math.max(_fpMaxP, rawP);
+                var p = _fpMaxP;
+                phone3El.style.opacity = (p > 0.04) ? '0' : '';
+
+                var jumpT   = easeOut(clamp(p / 0.12, 0, 1));
+                var scJump  = lerp(startSc, startSc * 1.20, jumpT);
+                var glideT  = easeInOut(clamp((p - 0.10) / 0.65, 0, 1));
+                var scGlide = lerp(startSc * 1.20, targetSc, glideT);
+                var sc      = (p < 0.10) ? scJump : scGlide;
+                var posT    = easeInOut(clamp(p / 0.75, 0, 1));
+                var cx      = lerp(startCX, targetCX, posT);
+                var cy      = lerp(startCY, targetCY, posT);
+                if (fpChat) fpChat.style.opacity = String(clamp(1 - p / 0.40, 0, 1));
+
+                var fadeIn    = clamp(p / 0.05, 0, 1);
+                var fadeOut   = 1 - easeInOut(clamp((p - 0.65) / 0.35, 0, 1));
+                var fpOpacity = fadeIn * fadeOut;
+                var rotZ      = 0;
+
+                // ── FASE 3: LEITURA — celular invisível, pessoa lê a imagem ───────
+                if (scrollY >= endScroll) {
+                    cx        = targetCX;
+                    cy        = targetCY;
+                    sc        = targetSc;
+                    rotZ      = 0;
+                    fpOpacity = 0;
+                    if (fpChat) fpChat.style.opacity = '0';
+                }
+
+                // ── Aplica o transform ────────────────────────────────────────────
+                fp.style.left      = cx + 'px';
+                fp.style.top       = cy + 'px';
+                fp.style.transform = 'translate(-50%,-50%) rotateZ(' + rotZ + 'deg) scale(' + sc + ')';
+                fp.style.opacity   = String(clamp(fpOpacity, 0, 1));
+            }
+
+            var _fpTick = false;
+            window.addEventListener('scroll', function () {
+                if (!_fpTick) { _fpTick = true; requestAnimationFrame(function() { _fpTick = false; update(); }); }
+            }, { passive: true });
+            window.addEventListener('resize', function () { initialized = false; _invalidateCache(); update(); });
+            update();
+        })();
+
+        // ===== FOTO-DOBRA — fls-inner sempre visível =====
+        (function () {
+            var fdSection  = document.getElementById('foto-dobra');
+            if (!fdSection) return;
+
+            // ── Repulsão de mouse com Spring Physics (como framer-motion useSpring) ──
+            var cards = [];
+            document.querySelectorAll('.fp-logo-card').forEach(function (el) {
+                cards.push({ el: el, x: 0, y: 0, vx: 0, vy: 0 });
+            });
+            var mX = 0, mY = 0, lastT = performance.now();
+            var STIFFNESS = 280, DAMPING = 26, RADIUS = 160, FORCE = 55;
+            window.addEventListener('mousemove', function (e) { mX = e.clientX; mY = e.clientY; });
+            var _fdSectionVisible = false;
+            var _fdVisObs = new IntersectionObserver(function(entries) { _fdSectionVisible = entries[0].isIntersecting; }, { threshold: 0 });
+            _fdVisObs.observe(fdSection);
+            (function anim(now) {
+                requestAnimationFrame(anim);
+                if (!_fdSectionVisible) { lastT = now; return; }
+                var dt = Math.min((now - lastT) / 1000, 0.05);
+                lastT = now;
+                cards.forEach(function (c) {
+                    var rect = c.el.getBoundingClientRect();
+                    var cx   = rect.left + rect.width  * 0.5;
+                    var cy   = rect.top  + rect.height * 0.5;
+                    var dx   = mX - cx, dy = mY - cy;
+                    var dist = Math.sqrt(dx * dx + dy * dy);
+                    var tX = 0, tY = 0;
+                    if (dist < RADIUS && dist > 0) {
+                        var ang = Math.atan2(dy, dx);
+                        var f   = (1 - dist / RADIUS) * FORCE;
+                        tX = -Math.cos(ang) * f;
+                        tY = -Math.sin(ang) * f;
+                    }
+                    var ax = -STIFFNESS * (c.x - tX) - DAMPING * c.vx;
+                    var ay = -STIFFNESS * (c.y - tY) - DAMPING * c.vy;
+                    c.vx += ax * dt; c.vy += ay * dt;
+                    c.x  += c.vx * dt; c.y  += c.vy * dt;
+                    c.el.style.transform = 'translate(' + c.x.toFixed(2) + 'px,' + c.y.toFixed(2) + 'px)';
+                });
+            })(performance.now());
+        })();
+
+        // Carrega o iframe Spline após o primeiro render para não bloquear o LCP
+        (function () {
+            var el = document.getElementById('spline-robot');
+            if (!el) return;
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(function () { el.src = el.dataset.src; }, { timeout: 2000 });
+            } else {
+                setTimeout(function () { el.src = el.dataset.src; }, 800);
+            }
+        })();
+
+        // Cabeçalho aparece apenas após a primeira dobra
+        // (controlado pelo script Three.js abaixo)
+    </script>
+
+    <!-- ===== FLOATING ICONS — Hover cards ===== -->
+    <script>
+    (function () {
+        /* Overlay fixo, acima de tudo, sem overflow issues */
+        var ov = document.createElement('div');
+        ov.style.cssText = 'position:fixed;top:0;left:0;width:0;height:0;overflow:visible;pointer-events:none;z-index:99999;';
+        document.body.appendChild(ov);
+
+        var card = document.createElement('div');
+        card.style.cssText = [
+            'position:fixed',
+            'pointer-events:none',
+            'opacity:0',
+            'transform:translateY(8px) scale(0.96)',
+            'transition:opacity 0.22s ease, transform 0.22s ease',
+            'width:240px',
+            'background:#ffffff',
+            'border:none',
+            'border-radius:16px',
+            'padding:18px 20px',
+            'box-shadow:0 12px 48px rgba(0,0,0,0.55),0 2px 8px rgba(0,0,0,0.2)',
+            'z-index:99999',
+            'top:0',
+            'left:0',
+        ].join(';');
+
+        var ttl = document.createElement('p');
+        ttl.style.cssText = 'margin:0 0 7px;font-size:13px;font-weight:700;color:#111111;font-family:Space Grotesk,sans-serif;line-height:1.3;';
+        var dsc = document.createElement('p');
+        dsc.style.cssText = 'margin:0;font-size:12px;color:#444444;line-height:1.65;font-family:Work Sans,sans-serif;';
+        card.appendChild(ttl);
+        card.appendChild(dsc);
+        document.body.appendChild(card);
+
+        function place(iconEl) {
+            var dir  = iconEl.dataset.dir || 'right';
+            var rect = iconEl.getBoundingClientRect();
+            var W = card.offsetWidth || 230;
+            var H = card.offsetHeight || 100;
+            var G = 16; /* gap */
+            var vw = window.innerWidth, vh = window.innerHeight;
+            var x, y;
+
+            if (dir === 'right')       { x = rect.right + G;                       y = rect.top + rect.height/2 - H/2; }
+            else if (dir === 'left')   { x = rect.left  - W - G;                   y = rect.top + rect.height/2 - H/2; }
+            else if (dir === 'above')  { x = rect.left  + rect.width/2 - W/2;      y = rect.top - H - G; }
+            else                       { x = rect.left  + rect.width/2 - W/2;      y = rect.bottom + G; }
+
+            /* Fallback: se sair da tela vira para o lado oposto */
+            if (dir === 'right'  && x + W > vw) { x = rect.left - W - G; }
+            if (dir === 'left'   && x < 0)       { x = rect.right + G; }
+            if (dir === 'above'  && y < 0)        { y = rect.bottom + G; }
+            if (dir === 'below'  && y + H > vh)   { y = rect.top - H - G; }
+
+            x = Math.max(8, Math.min(x, vw - W - 8));
+            y = Math.max(8, Math.min(y, vh - H - 8));
+
+            card.style.left = x + 'px';
+            card.style.top  = y + 'px';
+        }
+
+        var current = null;
+
+        function show(iconEl) {
+            ttl.textContent = iconEl.dataset.title || '';
+            dsc.textContent = iconEl.dataset.desc  || '';
+            /* posiciona fora da tela, mede, depois anima */
+            card.style.transition = 'none';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(8px) scale(0.96)';
+            card.style.left = '-9999px';
+            card.style.top  = '-9999px';
+            requestAnimationFrame(function () {
+                place(iconEl);
+                /* força reflow antes de ligar a transição */
+                card.getBoundingClientRect();
+                card.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0px) scale(1)';
+            });
+            var inner = iconEl.querySelector('div');
+            if (inner) inner.style.animationPlayState = 'paused';
+            current = iconEl;
+        }
+
+        function hide() {
+            card.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(6px) scale(0.97)';
+            if (current) {
+                var inner = current.querySelector('div');
+                if (inner) inner.style.animationPlayState = 'running';
+                current = null;
+            }
+        }
+
+        function attach() {
+            var icons = document.querySelectorAll('#fls-inner .floating-icon');
+            icons.forEach(function (el) {
+                el.style.cursor = 'pointer';
+                el.addEventListener('mouseenter', function () { show(el); });
+                el.addEventListener('mouseleave', hide);
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', attach);
+        } else {
+            attach();
+        }
+    })();
+    </script>
+
+    <!-- ============================================================
+         HERO 3D SCROLLYTELLING — Three.js vanilla
+         ============================================================ -->
+    <script>
+    (function () {
+        if (typeof THREE === 'undefined') return;
+
+        var container = document.getElementById('hero-scroll-container');
+        var mountEl   = document.getElementById('hero-mount');
+        var flashEl   = document.getElementById('hero-flashlight');
+        var nav       = document.getElementById('main-nav');
+        var texts = [null,
+            document.getElementById('hero-t1'),
+            document.getElementById('hero-t2'),
+            document.getElementById('hero-t3'),
+            document.getElementById('hero-t4'),
+            document.getElementById('hero-t5'),
+            document.getElementById('hero-t6'),
+            document.getElementById('hero-t7')
+        ];
+        if (!container || !mountEl) return;
+
+        function lerp(a,b,t){ return a+(b-a)*t; }
+        function clamp(v,lo,hi){ return Math.max(lo,Math.min(hi,v)); }
+
+        // ── textos por fase ───────────────────────────────────────
+        var phaseRanges = [
+            [0,0.08],[0.08,0.18],[0.18,0.28],[0.38,0.50],
+            [0.50,0.65],[0.65,0.75],[0.75,0.85]
+        ];
+        function updateTexts(p) {
+            for (var i=0;i<phaseRanges.length;i++) {
+                var el=texts[i+1]; if (!el) continue;
+                el.style.opacity = (p>=phaseRanges[i][0] && p<phaseRanges[i][1]) ? '1' : '0';
+            }
+        }
+
+        // ── nav: aparece ao rolar para cima após o hero ──────────
+        var navVisible = false;
+        var lastScrollY = window.scrollY;
+        function setNavVisible(show) {
+            if (!nav) return;
+            if (show === navVisible) return;
+            navVisible = show;
+            nav.style.opacity = show ? '1' : '0';
+            nav.style.transform = show ? 'translateY(0)' : 'translateY(-100%)';
+            nav.style.pointerEvents = show ? 'auto' : 'none';
+        }
+        window.addEventListener('scroll', function() {
+            var curY = window.scrollY;
+            var heroEnd = container.offsetHeight - window.innerHeight;
+            if (curY >= heroEnd * 0.97) {
+                setNavVisible(curY < lastScrollY); // scroll-up → mostra, scroll-down → esconde
+            } else {
+                setNavVisible(false);
+            }
+            lastScrollY = curY;
+        }, { passive:true });
+
+        // ── scroll ────────────────────────────────────────────────
+        var progressRef = 0, _heroMaxP = 0;
+        function handleScroll() {
+            var rect = container.getBoundingClientRect();
+            var wh = window.innerHeight;
+            var p = clamp(-rect.top / (rect.height - wh), 0, 1);
+            // Trava: nunca retrocede
+            _heroMaxP = Math.max(_heroMaxP, p);
+            progressRef = _heroMaxP;
+        }
+        window.addEventListener('scroll', handleScroll, { passive:true });
+        handleScroll();
+
+        // ── Three.js ──────────────────────────────────────────────
+        var W = mountEl.clientWidth, H = mountEl.clientHeight;
+        var scene    = new THREE.Scene();
+        var camera   = new THREE.PerspectiveCamera(45, W/H, 0.1, 1000);
+        camera.position.z = 16;
+        var renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+        renderer.setSize(W, H);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        mountEl.appendChild(renderer.domElement);
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+        var dl1 = new THREE.DirectionalLight(0xffffff,2.5); dl1.position.set(10,20,15); scene.add(dl1);
+        var dl2 = new THREE.DirectionalLight(0xffffff,1.5); dl2.position.set(-15,0,-10); scene.add(dl2);
+        var flashlight = new THREE.PointLight(0xc6f432, 3, 40); scene.add(flashlight);
+
+        function createPTexture() {
+            var c=document.createElement('canvas'); c.width=512; c.height=512;
+            var ctx=c.getContext('2d');
+            ctx.fillStyle='#202020'; ctx.fillRect(0,0,512,512);
+            ctx.filter='blur(4px)'; ctx.fillStyle='#ffffff';
+            ctx.font='900 420px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+            ctx.fillText('P',256,276);
+            var t=new THREE.CanvasTexture(c); t.anisotropy=16; return t;
+        }
+        function createRoundedBox(size,radius,segs) {
+            var geo=new THREE.BoxGeometry(size,size,size,segs,segs,segs);
+            var pos=geo.attributes.position, inner=size/2-radius;
+            for (var i=0;i<pos.count;i++) {
+                var x=pos.getX(i),y=pos.getY(i),z=pos.getZ(i);
+                var cx=clamp(x,-inner,inner),cy=clamp(y,-inner,inner),cz=clamp(z,-inner,inner);
+                var dx=x-cx,dy=y-cy,dz=z-cz,len=Math.sqrt(dx*dx+dy*dy+dz*dz)||1;
+                pos.setXYZ(i,cx+dx/len*radius,cy+dy/len*radius,cz+dz/len*radius);
+            }
+            geo.computeVertexNormals(); return geo;
+        }
+
+        var pBump=createPTexture(), roundGeo=createRoundedBox(0.85,0.08,12);
+        var matW=new THREE.MeshStandardMaterial({color:0xcccccc,roughness:0.15,metalness:0.25,bumpMap:pBump,bumpScale:1.8});
+        var matG=new THREE.MeshStandardMaterial({color:0xc6f432,emissive:0xc6f432,emissiveIntensity:0.6,roughness:0.15,metalness:0.3,bumpMap:pBump,bumpScale:1.8});
+
+        var cubeGroup=new THREE.Group(); scene.add(cubeGroup);
+        var cubes=[], gap=0.95;
+        var outerDirs=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1],[1,1,1],[-1,-1,-1],[1,-1,1],[-1,1,-1]];
+
+        for (var cIdx=0;cIdx<=outerDirs.length;cIdx++) {
+            var isC=(cIdx===0), nx=0,ny=0,nz=0;
+            if (!isC){ var d=outerDirs[cIdx-1],dl=Math.sqrt(d[0]*d[0]+d[1]*d[1]+d[2]*d[2]); nx=d[0]/dl;ny=d[1]/dl;nz=d[2]/dl; }
+            for (var ix=-1;ix<=1;ix++) for (var iy=-1;iy<=1;iy++) for (var iz=-1;iz<=1;iz++) {
+                var mesh=new THREE.Mesh(roundGeo,Math.random()>0.65?matG:matW);
+                var ex=ix*gap,ey=iy*gap,ez=iz*gap;
+                if (!isC){ex+=nx*4;ey+=ny*4;ez+=nz*4;}
+                var el2=Math.sqrt(ex*ex+ey*ey+ez*ez)||1;
+                mesh.userData={ox:ix*gap,oy:iy*gap,oz:iz*gap,cubeIdx:cIdx,nx:nx,ny:ny,nz:nz,
+                    expDirX:ex/el2,expDirY:ey/el2,expDirZ:ez/el2,
+                    baseQuat:new THREE.Quaternion(),dropDelay:Math.random()*0.5};
+                mesh.visible=isC;
+                mesh.position.set(mesh.userData.ox,mesh.userData.oy,mesh.userData.oz);
+                cubes.push(mesh); cubeGroup.add(mesh);
+            }
+        }
+
+        function commitLayerRotation(axis,slice,angle) {
+            var round=function(v){return Math.round(v*100)/100;};
+            var cos=Math.round(Math.cos(angle)),sin=Math.round(Math.sin(angle));
+            var q=new THREE.Quaternion(),av=new THREE.Vector3(axis==='x'?1:0,axis==='y'?1:0,axis==='z'?1:0);
+            q.setFromAxisAngle(av,angle);
+            cubes.forEach(function(c){
+                var ud=c.userData;
+                if (ud.cubeIdx===0&&Math.abs(ud['o'+axis]-slice)<0.1){
+                    var px=ud.ox,py=ud.oy,pz=ud.oz;
+                    if (axis==='x'){ud.oy=round(py*cos-pz*sin);ud.oz=round(py*sin+pz*cos);}
+                    else if (axis==='y'){ud.ox=round(px*cos+pz*sin);ud.oz=round(-px*sin+pz*cos);}
+                    else{ud.ox=round(px*cos-py*sin);ud.oy=round(px*sin+py*cos);}
+                    ud.baseQuat.premultiply(q);
+                }
+            });
+        }
+
+        var mouse=new THREE.Vector2(0,0),target=new THREE.Vector2(0,0);
+        var mouseNorm=new THREE.Vector2(-1000,-1000);
+        var raycaster=new THREE.Raycaster();
+        var _heroTmpQ=new THREE.Quaternion(), _heroTmpV=new THREE.Vector3();
+        var _heroFlashTick=false, _heroRayFrame=0;
+        var _heroVisible=true;
+        (new IntersectionObserver(function(e){_heroVisible=e[0].isIntersecting;},{threshold:0})).observe(mountEl);
+
+        window.addEventListener('mousemove',function(e){
+            var rect=mountEl.getBoundingClientRect();
+            mouse.x=(e.clientX-W/2)*0.001; mouse.y=(e.clientY-H/2)*0.001;
+            mouseNorm.x=((e.clientX-rect.left)/rect.width)*2-1;
+            mouseNorm.y=-((e.clientY-rect.top)/rect.height)*2+1;
+            flashlight.position.set((e.clientX/W)*20-10,-(e.clientY/H)*20+10,10);
+            if (flashEl && !_heroFlashTick) {
+                _heroFlashTick=true;
+                var cx=e.clientX-rect.left, cy=e.clientY-rect.top;
+                requestAnimationFrame(function(){ _heroFlashTick=false; if(flashEl) flashEl.style.background='radial-gradient(circle 600px at '+cx+'px '+cy+'px,rgba(198,244,50,0.06) 0%,transparent 100%)'; });
+            }
+        },{passive:true});
+
+        var clock=new THREE.Clock(), curX=0,curScale=0.65,curSpinY=0,curSpinX=0, activeLayer=null;
+
+        function animate(){
+            requestAnimationFrame(animate);
+            if (!_heroVisible) return;
+            var time=clock.getElapsedTime(), p=progressRef;
+            var tX=0,tScale=0.65,tSpinY=0,tSpinX=0,pieceExp=0,autoAssemble=false,showOuter=false,joinP=0,lp;
+
+            if      (p<=0.08){tX=0;tScale=0.65;}
+            else if (p<=0.18){lp=(p-0.08)/0.10;tX=lerp(0,3.5,lp);tScale=lerp(0.65,1.2,lp);}
+            else if (p<=0.28){lp=(p-0.18)/0.10;tX=lerp(3.5,-3.5,lp);tScale=1.2;}
+            else if (p<=0.38){lp=(p-0.28)/0.10;tX=lerp(-3.5,-6.5,lp);tScale=lerp(1.2,2.5,lp);}
+            else if (p<=0.50){tX=-6.5;tScale=2.5;autoAssemble=true;}
+            else if (p<=0.65){lp=(p-0.50)/0.15;tX=lerp(-6.5,0,lp);tScale=lerp(2.5,1.2,lp);var eR=lp<0.5?2*lp*lp:1-Math.pow(-2*lp+2,2)/2;tSpinY=eR*(Math.PI*6);}
+            else if (p<=0.75){lp=(p-0.65)/0.10;tX=lerp(0,-3.5,lp);tScale=1.2;tSpinY=Math.PI*6;}
+            else if (p<=0.85){lp=(p-0.75)/0.10;tX=lerp(-3.5,3.5,lp);tScale=1.2;tSpinY=Math.PI*6;}
+            else{lp=(p-0.85)/0.15;tX=lerp(3.5,0,lp);tScale=lerp(1.2,35,lp*lp);tSpinY=Math.PI*6+lp*2.5;tSpinX=lp*1.5;pieceExp=lp*45;}
+
+            if (p>0.75&&p<=0.85){joinP=(p-0.75)/0.10;showOuter=true;}
+            else if (p>0.85){joinP=1;showOuter=true;}
+
+            curX+=(tX-curX)*0.05; curScale+=(tScale-curScale)*0.05;
+            curSpinY+=(tSpinY-curSpinY)*0.05; curSpinX+=(tSpinX-curSpinX)*0.05;
+            target.x+=(mouse.x-target.x)*0.1; target.y+=(mouse.y-target.y)*0.1;
+
+            cubeGroup.scale.setScalar(curScale);
+            cubeGroup.position.x=curX+target.x*2+Math.cos(time*0.8)*0.4;
+            cubeGroup.position.y=-target.y*2+Math.sin(time*1.2)*0.4;
+            cubeGroup.rotation.x=time*0.7+target.y+curSpinX;
+            cubeGroup.rotation.y=time*0.3+target.x+curSpinY;
+
+            if (pieceExp===0){
+                var shouldTrigger=false;
+                if (autoAssemble&&!activeLayer){if(Math.random()>0.94)shouldTrigger=true;}
+                else if (!activeLayer){
+                    if ((++_heroRayFrame & 3) === 0) {
+                        raycaster.setFromCamera(mouseNorm,camera);
+                        if(raycaster.intersectObjects(cubes.filter(function(c){return c.userData.cubeIdx===0;})).length>0)shouldTrigger=true;
+                    }
+                }
+                if (shouldTrigger&&!activeLayer){
+                    activeLayer={axis:['x','y','z'][Math.floor(Math.random()*3)],slice:[-gap,0,gap][Math.floor(Math.random()*3)],targetAngle:(Math.PI/2)*(Math.random()>0.5?1:-1),angle:0};
+                }
+                if (activeLayer){
+                    activeLayer.angle+=(activeLayer.targetAngle-activeLayer.angle)*0.1;
+                    if (Math.abs(activeLayer.targetAngle-activeLayer.angle)<0.01){commitLayerRotation(activeLayer.axis,activeLayer.slice,activeLayer.targetAngle);activeLayer=null;}
+                }
+            }
+
+            cubes.forEach(function(cube){
+                var ud=cube.userData,px=ud.ox,py=ud.oy,pz=ud.oz;
+                cube.quaternion.copy(ud.baseQuat);
+                if (ud.cubeIdx===0&&activeLayer&&Math.abs(ud['o'+activeLayer.axis]-activeLayer.slice)<0.1){
+                    var ax=activeLayer.axis,ag=activeLayer.angle,co=Math.cos(ag),si=Math.sin(ag);
+                    _heroTmpV.set(ax==='x'?1:0,ax==='y'?1:0,ax==='z'?1:0);
+                    _heroTmpQ.setFromAxisAngle(_heroTmpV,ag);
+                    cube.quaternion.premultiply(_heroTmpQ);
+                    if(ax==='x'){py=ud.oy*co-ud.oz*si;pz=ud.oy*si+ud.oz*co;}
+                    else if(ax==='y'){px=ud.ox*co+ud.oz*si;pz=-ud.ox*si+ud.oz*co;}
+                    else{px=ud.ox*co-ud.oy*si;py=ud.ox*si+ud.oy*co;}
+                }
+                if (ud.cubeIdx>0){
+                    if(!showOuter&&cube.visible)cube.visible=false;
+                    if(showOuter&&!cube.visible)cube.visible=true;
+                    px+=ud.nx*lerp(50,0,joinP);py+=ud.ny*lerp(50,0,joinP);pz+=ud.nz*lerp(50,0,joinP);
+                }
+                if (pieceExp>0){
+                    var sp=pieceExp*(1+ud.dropDelay*2.5);
+                    px+=ud.expDirX*sp;py+=ud.expDirY*sp;pz+=ud.expDirZ*sp;
+                    cube.rotateX(sp*0.1);cube.rotateY(sp*0.2);cube.rotateZ(sp*0.1);
+                }
+                cube.position.set(px,py,pz);
+            });
+
+            updateTexts(p);
+            renderer.render(scene,camera);
+        }
+        animate();
+
+        window.addEventListener('resize',function(){
+            W=mountEl.clientWidth; H=mountEl.clientHeight;
+            renderer.setSize(W,H); camera.aspect=W/H; camera.updateProjectionMatrix();
+        });
+    })();
+    </script>
+
+
+    <!-- ============================================================
+         DOBRA 2 — Cubo Interativo Three.js vanilla
+         ============================================================ -->
+    <script>
+    (function () {
+        if (typeof THREE === 'undefined') return;
+
+        var container = document.getElementById('dobra2-scroll-container');
+        var mountEl   = document.getElementById('dobra2-mount');
+        var flashEl   = document.getElementById('dobra2-flashlight');
+        var bgText    = document.getElementById('d2-bg-text');
+        var revealTxt = document.getElementById('d2-reveal-text');
+        var t1        = document.getElementById('d2-t1');
+        if (!container || !mountEl) return;
+
+        function lerp(a,b,t){ return a+(b-a)*t; }
+        function clamp(v,lo,hi){ return Math.max(lo,Math.min(hi,v)); }
+        function easeInOut(t){ return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2; }
+
+        // ── scroll ────────────────────────────────────────────────
+        var p2ref = 0;
+        window.addEventListener('scroll', function() {
+            var h = container.offsetHeight - window.innerHeight;
+            if (h <= 0) return;
+            p2ref = clamp(-container.getBoundingClientRect().top / h, 0, 1);
+        }, { passive:true });
+
+        // ── Three.js ──────────────────────────────────────────────
+        var W=mountEl.clientWidth, H=mountEl.clientHeight;
+        var scene=new THREE.Scene();
+        var camera=new THREE.PerspectiveCamera(45,W/H,0.1,1000);
+        camera.position.z=16;
+        var renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+        renderer.setSize(W,H); renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+        mountEl.appendChild(renderer.domElement);
+
+        scene.add(new THREE.AmbientLight(0xffffff,0.4));
+        var dl1=new THREE.DirectionalLight(0xffffff,2.5); dl1.position.set(10,20,15); scene.add(dl1);
+        var dl2=new THREE.DirectionalLight(0xffffff,1.5); dl2.position.set(-15,0,-10); scene.add(dl2);
+        var flashlight=new THREE.PointLight(0xc6f432,3,40); scene.add(flashlight);
+
+        // ── geometria arredondada ─────────────────────────────────
+        function createRoundedBox(size,radius,segs){
+            var geo=new THREE.BoxGeometry(size,size,size,segs,segs,segs);
+            var pos=geo.attributes.position, inner=size/2-radius;
+            for(var i=0;i<pos.count;i++){
+                var x=pos.getX(i),y=pos.getY(i),z=pos.getZ(i);
+                var cx=clamp(x,-inner,inner),cy=clamp(y,-inner,inner),cz=clamp(z,-inner,inner);
+                var dx=x-cx,dy=y-cy,dz=z-cz,len=Math.sqrt(dx*dx+dy*dy+dz*dz)||1;
+                pos.setXYZ(i,cx+dx/len*radius,cy+dy/len*radius,cz+dz/len*radius);
+            }
+            geo.computeVertexNormals(); return geo;
+        }
+        var roundedGeo=createRoundedBox(0.85,0.08,12);
+
+        // ── texturas de ferramentas ───────────────────────────────
+        function createToolTexture(name, bgColor){
+            var c=document.createElement('canvas'); c.width=256; c.height=256;
+            var ctx=c.getContext('2d');
+            ctx.fillStyle=bgColor; ctx.fillRect(0,0,256,256);
+            ctx.fillStyle=(bgColor==='#c6f432')?'#111211':'#111211';
+            ctx.font='bold 36px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+            // Draw tool name (break long names)
+            var words=name.split(' '), lineH=42, startY=128-(words.length-1)*lineH/2;
+            words.forEach(function(w,i){ ctx.fillText(w,128,startY+i*lineH); });
+            // subtle border
+            ctx.strokeStyle=(bgColor==='#c6f432')?'rgba(0,0,0,0.15)':'rgba(198,244,50,0.3)';
+            ctx.lineWidth=6; ctx.strokeRect(3,3,250,250);
+            var t=new THREE.CanvasTexture(c); t.anisotropy=16; return t;
+        }
+
+        var crms=['RD Station','HubSpot','Salesforce','Pipedrive','Kommo','Ploomes'];
+        var tasks=['Trello','Asana','Monday','Notion','ClickUp'];
+
+        var toolMaterials={};
+        crms.concat(tasks).forEach(function(tool){
+            var isTask=tasks.indexOf(tool)>=0;
+            var bg=isTask?'#c6f432':'#ffffff';
+            toolMaterials[tool]=new THREE.MeshStandardMaterial({
+                map:createToolTexture(tool,bg), roughness:0.3, metalness:0.1
+            });
+        });
+
+        // ── cubeGroup2 com materiais de ferramentas ───────────────
+        var cubeGroup2=new THREE.Group(); scene.add(cubeGroup2);
+        var cubes2=[], gap=0.95;
+        var crmCount=0, taskCount=0, globalIdx=0;
+
+        for(var ix=-1;ix<=1;ix++) for(var iy=-1;iy<=1;iy++) for(var iz=-1;iz<=1;iz++){
+            var toolType;
+            if(iz===1)       toolType='crm';
+            else if(ix===1)  toolType='task';
+            else if(iy===1)  toolType='task';
+            else if(ix===-1) toolType='crm';
+            else             toolType=Math.random()>0.5?'crm':'task';
+
+            var mat;
+            if(toolType==='crm'){ mat=toolMaterials[crms[crmCount%crms.length]]; crmCount++; }
+            else                { mat=toolMaterials[tasks[taskCount%tasks.length]]; taskCount++; }
+
+            var mesh=new THREE.Mesh(roundedGeo,mat);
+            var dist=40+Math.random()*20;
+            var sx=(Math.random()-0.5)*dist, sy=(Math.random()-0.5)*dist, sz=(Math.random()-0.5)*dist;
+            mesh.userData={
+                ox:ix*gap, oy:iy*gap, oz:iz*gap,
+                scatterX:sx, scatterY:sy, scatterZ:sz,
+                index:globalIdx++,
+                baseQuat:new THREE.Quaternion()
+            };
+            mesh.position.set(sx,sy,sz);
+            cubes2.push(mesh); cubeGroup2.add(mesh);
+        }
+
+        // ── estado ────────────────────────────────────────────────
+        var curX2=0, activeLayer2=null, scriptSeq=0, scriptDone=false;
+        var mouse2=new THREE.Vector2(0,0), target2=new THREE.Vector2(0,0);
+        var mouseNorm2=new THREE.Vector2(-1000,-1000);
+        var raycaster2=new THREE.Raycaster();
+        var clock2=new THREE.Clock();
+        var _d2TmpQ=new THREE.Quaternion(), _d2TmpV=new THREE.Vector3();
+        var _d2FlashTick=false, _d2RayFrame=0, _d2Visible=true;
+        (new IntersectionObserver(function(e){_d2Visible=e[0].isIntersecting;},{threshold:0})).observe(mountEl);
+
+        window.addEventListener('mousemove',function(e){
+            var rect=mountEl.getBoundingClientRect();
+            mouse2.x=(e.clientX-W/2)*0.001; mouse2.y=(e.clientY-H/2)*0.001;
+            mouseNorm2.x=((e.clientX-rect.left)/rect.width)*2-1;
+            mouseNorm2.y=-((e.clientY-rect.top)/rect.height)*2+1;
+            flashlight.position.set((e.clientX/W)*20-10,-(e.clientY/H)*20+10,10);
+            if(flashEl && !_d2FlashTick){
+                _d2FlashTick=true;
+                var cx=e.clientX-rect.left, cy=e.clientY-rect.top;
+                requestAnimationFrame(function(){ _d2FlashTick=false; if(flashEl) flashEl.style.background='radial-gradient(circle 600px at '+cx+'px '+cy+'px,rgba(198,244,50,0.06) 0%,transparent 100%)'; });
+            }
+        },{passive:true});
+
+        function updateOverlays(p){
+            if(t1)     t1.style.opacity=(p>0&&p<0.25)?'1':'0';
+            if(bgText) bgText.style.opacity=(p>=0.28&&p<=0.76)?'1':'0';
+            if(revealTxt){
+                var rp=clamp((p-0.30)/0.15,0,1);
+                revealTxt.style.clipPath='inset(0 '+(100-rp*100)+'% 0 0)';
+            }
+        }
+
+        function animate(){
+            requestAnimationFrame(animate);
+            if (!_d2Visible) return;
+            var time=clock2.getElapsedTime(), p=p2ref;
+            var floatX=Math.cos(time*0.8)*0.4, floatY=Math.sin(time*1.2)*0.4;
+            var rotX=time*0.14, rotY=time*0.06;
+
+            var asmCRM=0, asmTasks=0, isFinalPose=false, writingTX=0, spin2=0, mp, lp;
+
+            if(p<=0.25){
+                asmCRM=p/0.25;
+            } else if(p<=0.50){
+                asmCRM=1.0; mp=(p-0.25)/0.25;
+                if(mp<0.2)        writingTX=lerp(0,-7,mp/0.2);
+                else if(mp<0.8)   writingTX=lerp(-7,7,(mp-0.2)/0.6);
+                else              writingTX=lerp(7,0,(mp-0.8)/0.2);
+                spin2=mp*Math.PI*4;
+            } else if(p<=0.65){
+                asmCRM=1.0-((p-0.50)/0.15);
+            } else if(p<=0.80){
+                asmTasks=(p-0.65)/0.15; asmCRM=asmTasks;
+            } else if(p<=0.90){
+                asmCRM=1.0; asmTasks=1.0;
+            } else {
+                asmCRM=1.0; asmTasks=1.0; isFinalPose=true;
+            }
+
+            var genAsm=Math.max(asmCRM,asmTasks);
+
+            // hover / auto-trigger
+            var allowHover=(p>0.15&&p<=0.25)||(p>=0.70&&p<=0.80);
+            if(allowHover&&!isFinalPose&&!activeLayer2){
+                var trig=false;
+                if((++_d2RayFrame & 3)===0){ raycaster2.setFromCamera(mouseNorm2,camera); if(raycaster2.intersectObjects(cubes2).length>0) trig=true; }
+                if(Math.random()>0.98) trig=true;
+                if(trig) activeLayer2={axis:['x','y','z'][Math.floor(Math.random()*3)],
+                    slice:[-gap,0,gap][Math.floor(Math.random()*3)],
+                    targetAngle:Math.PI/2, angle:0, phase:'forward', script:false};
+            }
+
+            // scripted resolução
+            if(p>0.80&&p<=0.90&&genAsm===1&&!isFinalPose&&!activeLayer2&&!scriptDone){
+                if(scriptSeq===0){     activeLayer2={axis:'x',slice:gap,targetAngle:Math.PI*4,angle:0,script:true}; scriptSeq++; }
+                else if(scriptSeq===1){activeLayer2={axis:'y',slice:gap,targetAngle:Math.PI*2,angle:0,script:true}; scriptSeq++; }
+                else { scriptDone=true; }
+            }
+            if(p<0.75){scriptSeq=0;scriptDone=false;}
+
+            if(activeLayer2){
+                var spd=activeLayer2.script?0.025:0.05;
+                activeLayer2.angle+=(activeLayer2.targetAngle-activeLayer2.angle)*spd;
+                if(Math.abs(activeLayer2.targetAngle-activeLayer2.angle)<0.05){
+                    if(activeLayer2.script){ activeLayer2=null; }
+                    else if(activeLayer2.phase==='forward'){ activeLayer2.targetAngle=0; activeLayer2.phase='backward'; }
+                    else { activeLayer2=null; }
+                }
+            }
+
+            curX2+=(writingTX-curX2)*0.1;
+            target2.x+=(mouse2.x-target2.x)*0.1; target2.y+=(mouse2.y-target2.y)*0.1;
+            cubeGroup2.position.set(curX2+target2.x*2+floatX,-target2.y*2+floatY,0);
+
+            if(isFinalPose){
+                lp=clamp((p-0.90)/0.10,0,1);
+                cubeGroup2.rotation.set(lerp(rotX+target2.y,target2.y+Math.PI/6,lp),lerp(rotY+target2.x+spin2,target2.x+Math.PI/4,lp),0);
+                cubeGroup2.scale.setScalar(lerp(1.5,3.2,lp));
+            } else {
+                cubeGroup2.rotation.set(rotX+target2.y,rotY+target2.x+spin2,0);
+                cubeGroup2.scale.setScalar(1.5);
+            }
+
+            cubes2.forEach(function(cube){
+                var ud=cube.userData;
+                var pp=clamp(genAsm*1.5-(ud.index/54),0,1); pp=easeInOut(pp);
+                var px=ud.ox, py=ud.oy, pz=ud.oz;
+                cube.quaternion.copy(ud.baseQuat);
+
+                if(activeLayer2&&Math.abs(ud['o'+activeLayer2.axis]-activeLayer2.slice)<0.1){
+                    var ax=activeLayer2.axis,ag=activeLayer2.angle,co=Math.cos(ag),si=Math.sin(ag);
+                    _d2TmpV.set(ax==='x'?1:0,ax==='y'?1:0,ax==='z'?1:0);
+                    _d2TmpQ.setFromAxisAngle(_d2TmpV,ag);
+                    cube.quaternion.premultiply(_d2TmpQ);
+                    if(ax==='x'){py=ud.oy*co-ud.oz*si;pz=ud.oy*si+ud.oz*co;}
+                    else if(ax==='y'){px=ud.ox*co+ud.oz*si;pz=-ud.ox*si+ud.oz*co;}
+                    else{px=ud.ox*co-ud.oy*si;py=ud.ox*si+ud.oy*co;}
+                }
+
+                var fPx=lerp(ud.scatterX,px,pp), fPy=lerp(ud.scatterY,py,pp), fPz=lerp(ud.scatterZ,pz,pp);
+
+                // respiração na pose final
+                if(isFinalPose&&pp===1){
+                    var bp=clamp((p-0.90)/0.10,0,1);
+                    var bAmt=Math.sin(time*3+ud.index)*0.12*bp;
+                    var dlen=Math.sqrt(px*px+py*py+pz*pz)||1;
+                    fPx+=px/dlen*bAmt; fPy+=py/dlen*bAmt; fPz+=pz/dlen*bAmt;
+                }
+
+                cube.position.set(fPx,fPy,fPz);
+                if(pp<1){ var sp=(1-pp)*4; cube.rotation.set(sp,sp*1.2,sp*0.8); }
+            });
+
+            updateOverlays(p);
+            renderer.render(scene,camera);
+        }
+        animate();
+
+        window.addEventListener('resize',function(){
+            W=mountEl.clientWidth; H=mountEl.clientHeight;
+            renderer.setSize(W,H); camera.aspect=W/H; camera.updateProjectionMatrix();
+        });
+    })();
+    </script>
+</body>
+</html>
